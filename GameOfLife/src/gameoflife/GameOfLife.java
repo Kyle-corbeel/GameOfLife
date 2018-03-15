@@ -18,8 +18,14 @@ public class GameOfLife {
     
     public static void main(String[] args) {
         // TODO code application logic here
-        Veld veld1 = new Veld(10,10);
-        veld1.printVeld();
+        try{
+            Veld veld1 = new Veld(10,10);
+            veld1.printVeld();
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+            
     }
     
 }

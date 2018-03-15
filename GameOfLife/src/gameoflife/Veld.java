@@ -78,6 +78,11 @@ public class Veld {
             
         return(aantal);
     }
+    
+    public boolean getVeldStatus(int i, int j)
+    {
+        return(veldMatrix[i][j]);
+    }
 }
 
 
