@@ -51,7 +51,7 @@ public class SimulatieThread implements Runnable{
             {
                 numBuren = veld.aantalBuren(i, j);
                 //Als het veld levend is
-                if (veld.getVeldStatus(i,j)) {
+                if (veld.getCelStatus(i,j)) {
                     if (numBuren < minBlijfLevend || numBuren > maxBlijfLevend)
                         veld.toggleCel(i, j);
                 } else { //Als het veld niet levend is
