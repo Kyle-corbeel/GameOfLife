@@ -11,4 +11,22 @@ package gameoflife;
  */
 public class Veldbeheer {
     
+    public Veldbeheer()
+    {
+        
+    }
+    
+    public Veld maakVeld(int hoogte, int breedte)
+    {
+        try{
+            Veld veld1 = new Veld(hoogte,breedte);
+            return(veld1);
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return(veld1);
+        }
+        
+    }
+    
 }
