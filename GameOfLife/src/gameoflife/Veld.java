@@ -25,10 +25,8 @@ public class Veld {
     
     public Veld (int tempHoogte, int tempBreedte) throws IllegalArgumentException
     {
-        if (tempHoogte ==0|| tempBreedte ==0)
-        {
+        if (tempHoogte ==0 || tempBreedte ==0)
             throw new IllegalArgumentException("Dimensies moeten groter zijn dan 0");
-        }
         hoogte = tempHoogte;
         breedte = tempBreedte;
         Boolean[][] tempVeldMatrix = new Boolean[hoogte][breedte];
@@ -44,6 +42,10 @@ public class Veld {
         System.out.println(veldMatrix.length +" op " +veldMatrix[1].length);
     }
     
+    /**
+     * Functie om de werking van deze classe te testen
+     */
+    
     public void printVeld ()
     {
         for (i=0; i<hoogte; i++)
@@ -51,42 +53,83 @@ public class Veld {
             for (j=0; j<breedte; j++)
             {
                 if(veldMatrix[i][j]==false)
-                {
                     System.out.print("X  ");
-                }
                 else 
-                {
                     System.out.print("O  ");
-                }
             }
             System.out.println();
         }
     }
+    
+    /**
+     * Telt het aantal buren van de cel
+     * @param i de rij van de cel
+     * @param j de kolom van de cel
+     * @return returned het aantal levende buren
+     */
     
     public int aantalBuren(int i,int j)
     {
         Integer aantal = 0;
         Integer k;
         Integer m;
+        
         for (k=i-1;k<i+2;k++)
         {
             for(m=j-1;m<j+2;j++)
             {
-                
+                if(k<0||k>hoogte||m<0||m>breedte)
+                {
+                    if(veldMatrix[k][m])
+                        aantal++;
+                }
             }
         }
             
         return(aantal);
     }
     
+    /**
+     * Controleert de status van de cel
+     * @param i de rij van de cel
+     * @param j de kolom van de cel
+     * @return returned de staat van de cel: True-Levend, False-dood
+     */
+    
     public boolean getCelStatus(int i, int j)
     {
         return(veldMatrix[i][j]);
     }
     
+    /**
+     * Toggled de cel van levend naar dood en vice versa
+     * @param i de rij van de cel
+     * @param j de kolom van de cel
+     */
+    
     public void toggleCel(int i, int j)
     {
         veldMatrix[i][j] =  !veldMatrix[i][j];
+    }
+    
+    /**
+     * Returned de hoogte van de matrix
+     * @return 
+     */
+    
+    public int getHoogte ()
+    {
+        return(hoogte);
+    }
+    
+    /**
+     * Returned de breedte van de matrix
+     * @return 
+     */
+    
+    public int getBreedte ()
+    {
+        return(breedte);
     }
 }
 
