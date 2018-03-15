@@ -10,12 +10,16 @@ package gameoflife;
  * @author kyle-
  */
 public class GameOfLife {
+    
 
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String[] args) {
         // TODO code application logic here
+        Veld veld1 = new Veld(10,10);
+        veld1.printVeld();
     }
     
 }
