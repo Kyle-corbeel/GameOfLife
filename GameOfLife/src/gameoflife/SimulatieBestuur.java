@@ -11,6 +11,9 @@ package gameoflife;
  */
 public class SimulatieBestuur {
     
+    //Simulatieveld, wordt doorgegeven vanuit een 'bovenliggend' object
+    Veld veld;
+    
     //De spelregels
     //Hoeveel levende buren er min/max nodig zijn om levend te blijven
     private int minBlijfLevend;
@@ -28,6 +31,9 @@ public class SimulatieBestuur {
      */
     public void SimulatieBestuur(Veld veld)
     {
+        //Veld doorgeven
+        this.veld = veld;
+        
         //Standaardinstellingen initialiseren (Zoals in Conway's Game Of Life)
         minBlijfLevend = 2;
         maxBlijfLevend = 3;
@@ -50,9 +56,13 @@ public class SimulatieBestuur {
      */
     public void play(int snelheid)
     {
+        //Thread aanmaken
+        Thread simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
+        //Thread starten
+        simulatie.start();
         //Zolang play aanstaat, blijft de simulatie lopen aan een bepaalde snelheid
         while(play) {
-            stap(1);
+            
         }
     }
     

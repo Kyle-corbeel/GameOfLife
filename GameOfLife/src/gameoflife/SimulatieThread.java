@@ -31,11 +31,11 @@ public class SimulatieThread implements Runnable{
      * @param minWordtL
      * @param maxWordtL
      */
-    public void SimulatieThread(Veld veld, int minBlijfL, int maxBlijfL, int minWordtL, int maxWordtL)
-    {
+    SimulatieThread(Veld veld, int minBlijfL, int maxBlijfL, int minWordtL, int maxWordtL) {
         //Initialiseer het veld en stel huidige regels in
         this.veld = veld;
         
+        //Instellingen doorgeven
         this.minBlijfLevend = minBlijfL;
         this.maxBlijfLevend = maxBlijfL;
         this.minWordtLevend = minWordtL;
@@ -45,20 +45,22 @@ public class SimulatieThread implements Runnable{
     @Override
     public void run() {
         int numBuren;
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 10; j++)
-            {
-                numBuren = veld.aantalBuren(i, j);
-                //Als het veld levend is
-                if (veld.getCelStatus(i,j)) {
-                    if (numBuren < minBlijfLevend || numBuren > maxBlijfLevend)
-                        veld.toggleCel(i, j);
-                } else { //Als het veld niet levend is
-                    if (numBuren >= minWordtLevend && numBuren <= maxWordtLevend)
-                        veld.toggleCel(i, j);
+        //while(running) {
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    numBuren = veld.aantalBuren(i, j);
+                    //Als het veld levend is
+                    if (veld.getCelStatus(i,j)) {
+                        //Checken of er voldaan is aan de regels
+                        if (numBuren < minBlijfLevend || numBuren > maxBlijfLevend)
+                            veld.toggleCel(i, j);
+                    } else { //Als het veld niet levend is
+                        //Checken of er voldaan is aan de regels
+                        if (numBuren >= minWordtLevend && numBuren <= maxWordtLevend)
+                            veld.toggleCel(i, j);
+                    }
                 }
             }
-        }
+        //}
     }
 }
