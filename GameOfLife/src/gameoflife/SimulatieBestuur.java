@@ -22,7 +22,11 @@ public class SimulatieBestuur {
     //
     private boolean play = false;
     
-    public void SimulatieBestuur()
+    /**
+     * Constructor van SimulatieBestuur
+     * @param veld Het huidige veld dat gesimuleerd zal worden
+     */
+    public void SimulatieBestuur(Veld veld)
     {
         //Standaardinstellingen initialiseren (Zoals in Conway's Game Of Life)
         minBlijfLevend = 2;
@@ -75,10 +79,5 @@ public class SimulatieBestuur {
             }
         }
         return false;
-    }
-    
-    public void Kyle()
-    {
-        
     }
 }
