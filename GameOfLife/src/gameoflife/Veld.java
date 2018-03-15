@@ -79,9 +79,14 @@ public class Veld {
         return(aantal);
     }
     
-    public boolean getVeldStatus(int i, int j)
+    public boolean getCelStatus(int i, int j)
     {
         return(veldMatrix[i][j]);
+    }
+    
+    public void toggleCel(int i, int j)
+    {
+        veldMatrix[i][j] =  !veldMatrix[i][j];
     }
 }
 
