@@ -74,11 +74,11 @@ public class Veld {
         Integer k;
         Integer m;
         
-        for (k=i-1;k<i+2;k++)
+        for (k = i - 1; k < i + 2; k++)
         {
-            for(m=j-1;m<j+2;j++)
+            for(m = j - 1; m < j + 2 ; j++)
             {
-                if(k<0||k>hoogte||m<0||m>breedte)
+                if(k >= 0 && k < hoogte && m >= 0 && m < breedte)
                 {
                     if(veldMatrix[k][m])
                         aantal++;

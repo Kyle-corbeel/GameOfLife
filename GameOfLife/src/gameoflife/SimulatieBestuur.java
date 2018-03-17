@@ -7,7 +7,7 @@ package gameoflife;
 
 /**
  *
- * @author Kyle Corbeel en Dieter Nuytemans
+ * @author Dieter Nuytemans en Kyle Corbeel
  */
 public class SimulatieBestuur {
     
@@ -22,32 +22,50 @@ public class SimulatieBestuur {
     private int minWordtLevend;
     private int maxWordtLevend;
     
-    //
-    private boolean play = false;
+    //Variabele die aangeeft of er gesimuleerd wordt aan +/- vaste snelheid
+    private boolean play;
     
     /**
      * Constructor van SimulatieBestuur
      * @param veld Het huidige veld dat gesimuleerd zal worden
      */
-    public void SimulatieBestuur(Veld veld)
+    SimulatieBestuur(Veld veld)
     {
         //Veld doorgeven
         this.veld = veld;
         
         //Standaardinstellingen initialiseren (Zoals in Conway's Game Of Life)
-        minBlijfLevend = 2;
-        maxBlijfLevend = 3;
-        minWordtLevend = 3;
-        maxWordtLevend = 3;
+        this.minBlijfLevend = 2;
+        this.maxBlijfLevend = 3;
+        this.minWordtLevend = 3;
+        this.maxWordtLevend = 3;
+        
+        //Standaard speelt de simulatie niet
+        this.play = false;
     }
     
     /**
      * Doe een bepaald aantal stappen
      * @param aantal stappen dat overlopen zal worden
+     * @throws java.lang.Exception
      */
-    public void stap(int aantal)
+    public void stap(int aantal) throws Exception
     {
-        
+        for (int i = 0; i < aantal; i++)
+        {
+            //Maak nieuwe simulatie en start
+            Thread simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
+            simulatie.start();
+            simulatie.setPriority(simulatie.MAX_PRIORITY);
+            
+            //Wacht tot simulatie klaar is
+            try {
+                simulatie.join();
+            } catch(Exception e)
+            {
+                System.out.println(e);
+            }
+        }
     }
     
     /**
@@ -56,13 +74,21 @@ public class SimulatieBestuur {
      */
     public void play(int snelheid)
     {
-        //Thread aanmaken
-        Thread simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
-        //Thread starten
-        simulatie.start();
+        long wachttijd = 1 / snelheid;
+        
         //Zolang play aanstaat, blijft de simulatie lopen aan een bepaalde snelheid
         while(play) {
-            
+            //Thread aanmaken
+            Thread simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
+            //Thread starten
+            simulatie.start();
+            try {
+                simulatie.join();
+                simulatie.sleep(wachttijd);
+            } catch(Exception e)
+            {
+                System.out.println(e);
+            }
         }
     }
     
