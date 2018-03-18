@@ -73,19 +73,17 @@ public class SimulatieBestuur {
      */
     public void play(int snelheid) throws InterruptedException
     {
-        play = true;
+        this.play = true;
         if (snelheid <= 0)
             snelheid = 1;
         
         long wachttijd = 1000 / snelheid; //in ms
         
-        long startTime = System.currentTimeMillis();
-        
         Thread simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
         simulatie.start();
         
         //Zolang play aanstaat, blijft de simulatie lopen aan een bepaalde snelheid
-        while(play) {
+        while(this.play) {
             
             try {
                 simulatie.join();
@@ -94,22 +92,19 @@ public class SimulatieBestuur {
                 System.out.println(e);
             }
             
-            long endTime = System.currentTimeMillis();
-            
-            System.out.println("Runtime (ms) : " + (endTime - startTime));
-            
-            startTime = System.currentTimeMillis();
-            
-            //Thread aanmaken
-            simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
-            //Thread starten
-            simulatie.start();
-            try {
-                simulatie.sleep(wachttijd);
-            } catch(Exception e)
-            {
-                System.out.println(e);
-            }            
+            if (this.play) {
+                //Thread aanmaken
+                simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
+
+                //Thread starten en wachten om de snelheid te behouden
+                try {
+                    simulatie.start();
+                    simulatie.sleep(wachttijd);
+                } catch(Exception e)
+                {
+                    System.out.println(e);
+                }
+            }
         }
     }
     
@@ -118,7 +113,6 @@ public class SimulatieBestuur {
      */
     public void stop() {
         this.play = false;
-        //simulatie.interrupt();
     }
     
     /**
