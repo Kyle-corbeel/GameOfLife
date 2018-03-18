@@ -20,6 +20,8 @@ public class GameOfLife {
         // TODO code application logic here
         try{
             Veldbeheer veldbeheer1 = new Veldbeheer();
+            Bestandbeheer bestandH1 = new Bestandbeheer();
+            
             Veld veld1 = veldbeheer1.maakVeld(5, 5);
             veld1.printVeld();
             veldbeheer1.vulVeldRandom(veld1, 50);
@@ -27,13 +29,7 @@ public class GameOfLife {
             SimulatieBestuur simulatieBestuur = new SimulatieBestuur(veld1);
             simulatieBestuur.stap(1);
             veld1.printVeld();
-            Boolean[][] veldMatrix = new Boolean[][]{
-                {false, false, false, false, false},
-                {true, true, true, true, true},
-                {false, false, false, false, false},
-                {true, true, true, true, true},
-                {false, false, false, false, false}
-            };
+            Boolean[][] veldMatrix = bestandH1.laadVeld("bestandsNaam");
             veld1 = veldbeheer1.maakVeldFile(veldMatrix);
             veld1.printVeld();
         }
