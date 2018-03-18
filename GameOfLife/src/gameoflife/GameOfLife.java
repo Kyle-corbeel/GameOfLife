@@ -19,10 +19,22 @@ public class GameOfLife {
     public static void main(String[] args) throws Exception {
         // TODO code application logic here
         try{
-            Veld veld1 = new Veld(10,10);
+            Veldbeheer veldbeheer1 = new Veldbeheer();
+            Veld veld1 = veldbeheer1.maakVeld(5, 5);
+            veld1.printVeld();
+            veldbeheer1.vulVeldRandom(veld1, 50);
             veld1.printVeld();
             SimulatieBestuur simulatieBestuur = new SimulatieBestuur(veld1);
             simulatieBestuur.stap(1);
+            veld1.printVeld();
+            Boolean[][] veldMatrix = new Boolean[][]{
+                {false, false, false, false, false},
+                {true, true, true, true, true},
+                {false, false, false, false, false},
+                {true, true, true, true, true},
+                {false, false, false, false, false}
+            };
+            veld1 = veldbeheer1.maakVeldFile(veldMatrix);
             veld1.printVeld();
         }
         catch (IllegalArgumentException e) {

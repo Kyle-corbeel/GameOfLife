@@ -39,7 +39,7 @@ public class Veld {
             }
         }
         veldMatrix = tempVeldMatrix;
-        System.out.println(veldMatrix.length +" op " +veldMatrix[1].length);
+        //System.out.println(veldMatrix.length +" op " +veldMatrix[1].length);
     }
     
     /**
