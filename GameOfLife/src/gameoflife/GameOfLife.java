@@ -29,12 +29,9 @@ public class GameOfLife {
             SimulatieBestuur simulatieBestuur = new SimulatieBestuur(veld1);
             simulatieBestuur.stap(1);
             veld1.printVeld();
-            Boolean[][] veldMatrix = bestandH1.laadVeld("bestandsNaam");
-            veld1 = veldbeheer1.maakVeldFile(veldMatrix);
-            veld1.printVeld();
-            
-            veld1 = veldbeheer1.maakVeld(255, 255);
             bestandH1.saveVeld(veld1);
+            veld1 = bestandH1.laadVeld("./velden/output.txt");
+            veld1.printVeld();
         }
         catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
