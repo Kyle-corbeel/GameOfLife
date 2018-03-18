@@ -32,6 +32,9 @@ public class GameOfLife {
             Boolean[][] veldMatrix = bestandH1.laadVeld("bestandsNaam");
             veld1 = veldbeheer1.maakVeldFile(veldMatrix);
             veld1.printVeld();
+            
+            veld1 = veldbeheer1.maakVeld(255, 255);
+            bestandH1.saveVeld(veld1);
         }
         catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
