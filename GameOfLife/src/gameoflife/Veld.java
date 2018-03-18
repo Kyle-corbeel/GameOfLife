@@ -35,7 +35,7 @@ public class Veld {
             for (j=0; j<breedte; j++)
             {
                 tempVeldMatrix[i][j] = false;
-                System.out.println(i +":" +j);
+                //System.out.println(i +":" +j);
             }
         }
         veldMatrix = tempVeldMatrix;
@@ -48,6 +48,7 @@ public class Veld {
     
     public void printVeld ()
     {
+        //Veld printen
         for (i=0; i<hoogte; i++)
         {
             for (j=0; j<breedte; j++)
@@ -59,6 +60,13 @@ public class Veld {
             }
             System.out.println();
         }
+        
+        //Lijntje trekken onder geprint veld
+        for (int h = 0; h < breedte*3; h++)
+        {
+            System.out.print("-");
+        }
+        System.out.println("");
     }
     
     /**
@@ -71,12 +79,10 @@ public class Veld {
     public int aantalBuren(int i,int j)
     {
         Integer aantal = 0;
-        Integer k;
-        Integer m;
         
-        for (k = i - 1; k < i + 2; k++)
+        for (int k = i - 1; k < i + 2; k++)
         {
-            for(m = j - 1; m < j + 2 ; j++)
+            for(int m = j - 1; m < j + 2 ; m++)
             {
                 if(k >= 0 && k < hoogte && m >= 0 && m < breedte)
                 {

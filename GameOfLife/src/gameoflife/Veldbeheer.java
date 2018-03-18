@@ -24,7 +24,7 @@ public class Veldbeheer {
         }
         catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return(veld1);
+            return(null);
         }
         
     }

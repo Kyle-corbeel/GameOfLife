@@ -56,7 +56,6 @@ public class SimulatieBestuur {
             //Maak nieuwe simulatie en start
             Thread simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
             simulatie.start();
-            simulatie.setPriority(simulatie.MAX_PRIORITY);
             
             //Wacht tot simulatie klaar is
             try {
