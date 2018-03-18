@@ -71,24 +71,54 @@ public class SimulatieBestuur {
      * Blijf lopen tot er op stop gedrukt wordt
      * @param snelheid (stappen per seconde)
      */
-    public void play(int snelheid)
+    public void play(int snelheid) throws InterruptedException
     {
-        long wachttijd = 1 / snelheid;
+        play = true;
+        if (snelheid <= 0)
+            snelheid = 1;
+        
+        long wachttijd = 1000 / snelheid; //in ms
+        
+        long startTime = System.currentTimeMillis();
+        
+        Thread simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
+        simulatie.start();
         
         //Zolang play aanstaat, blijft de simulatie lopen aan een bepaalde snelheid
         while(play) {
-            //Thread aanmaken
-            Thread simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
-            //Thread starten
-            simulatie.start();
+            
             try {
                 simulatie.join();
-                simulatie.sleep(wachttijd);
             } catch(Exception e)
             {
                 System.out.println(e);
             }
+            
+            long endTime = System.currentTimeMillis();
+            
+            System.out.println("Runtime (ms) : " + (endTime - startTime));
+            
+            startTime = System.currentTimeMillis();
+            
+            //Thread aanmaken
+            simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
+            //Thread starten
+            simulatie.start();
+            try {
+                simulatie.sleep(wachttijd);
+            } catch(Exception e)
+            {
+                System.out.println(e);
+            }            
         }
+    }
+    
+    /**
+     * Methode om de simulatie te stoppen
+     */
+    public void stop() {
+        this.play = false;
+        //simulatie.interrupt();
     }
     
     /**

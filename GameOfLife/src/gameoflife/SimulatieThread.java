@@ -61,6 +61,7 @@ public class SimulatieThread implements Runnable{
                     }
                 }
             }
+            veld.printVeld();
         //}
     }
 }
