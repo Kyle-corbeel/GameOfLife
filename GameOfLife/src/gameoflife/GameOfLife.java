@@ -22,15 +22,15 @@ public class GameOfLife {
             Veldbeheer veldbeheer1 = new Veldbeheer();
             Bestandbeheer bestandH1 = new Bestandbeheer();
             
-            Veld veld1 = veldbeheer1.maakVeld(5, 5);
+            Veld veld1 = veldbeheer1.maakVeld(100, 100);
             veld1.printVeld();
             veldbeheer1.vulVeldRandom(veld1, 50);
             veld1.printVeld();
             SimulatieBestuur simulatieBestuur = new SimulatieBestuur(veld1);
             simulatieBestuur.stap(1);
             veld1.printVeld();
-            bestandH1.saveVeld(veld1);
-            veld1 = bestandH1.laadVeld("./velden/output.txt");
+            bestandH1.saveVeld(veld1, "output.txt");
+            veld1 = bestandH1.laadVeld("output.txt");
             veld1.printVeld();
         }
         catch (IllegalArgumentException e) {

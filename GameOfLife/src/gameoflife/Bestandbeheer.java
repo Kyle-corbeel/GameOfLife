@@ -5,28 +5,28 @@
  */
 package gameoflife;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.util.Arrays;
 
 /**
  *
  * @author kyle-
  */
 public class Bestandbeheer {
-    private String standaardOpslagMap;
+    private String standaardOpslagMap = "./velden";
     private File[] listOfFiles;
+    
+    /**
+     * Bij het initialiseren word de standaarmap gecontroleerd op files
+     * @throws IOException 
+     */
     
     public Bestandbeheer() throws IOException
     {
-        File folder = new File("./velden");
+        File folder = new File(standaardOpslagMap);
         File[] listOfFiles = folder.listFiles();
 
         System.out.println("Scannen van opgeslagen files: ");
@@ -38,11 +38,19 @@ public class Bestandbeheer {
         }
     }
     
+    /**
+     * Er wordt een nieuw veld gecreeërd op basis van het gekozen bestand
+     * @param bestandsNaam
+     * @return het gecreeërde veld
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    
     public Veld laadVeld(String bestandsNaam) throws FileNotFoundException, IOException
     {
         byte[] data = new byte[1000];
         byte[] test = new byte[2];
-        FileInputStream fis = new FileInputStream(bestandsNaam);
+        FileInputStream fis = new FileInputStream(standaardOpslagMap +"/" +bestandsNaam);
         Veldbeheer veldbeh = new Veldbeheer();
         fis.read(data);
         int hoogte = data[0];
@@ -53,16 +61,15 @@ public class Bestandbeheer {
         {
             for(int j=0;j<breedte;j++)
             {
-                veldMatrix[i][j] = false;
+                veldMatrix[i][j] = false; //zet de volledige matrix standaard op false
             }
         }
         int i =0;
         int j =0;
-        for(int by=2;by<data.length;by++)
-        {
-            for(int bi=0;bi<8;bi++)
-            {
-                test[0] = (byte) (data[by]>>(7-bi));
+        for(int by=2;by<data.length;by++)   //Gaat bit per bit door de data
+        {                                   //wanneer de bit een 1 is zal
+            for(int bi=0;bi<8;bi++)         //in veldmatrix het overeenkomstige
+            {                               //veld op true gezet worden
                 if((data[by]>>(7-bi) & 0b00000001) == 0b00000001)
                 {
                     veldMatrix[i][j] = true;
@@ -85,7 +92,15 @@ public class Bestandbeheer {
         return(veld);
     }
     
-    public void saveVeld(Veld veld) throws FileNotFoundException, IOException
+    /**
+     * Slaat het doorgegeven veld op in de standaardmap
+     * @param veld het op te slagen veld
+     * @param bestandsNaam de gekozen bestandsnaam
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    
+    public void saveVeld(Veld veld, String bestandsNaam) throws FileNotFoundException, IOException
     {
         int hoogte = veld.getHoogte();
         int breedte = veld.getBreedte();
@@ -95,10 +110,10 @@ public class Bestandbeheer {
         data[0] = (byte) hoogte;
         data[1] = (byte) breedte;
         System.out.println("lengte is: " +data.length);
-        FileOutputStream fos = new FileOutputStream(new File("./velden/output.txt"));
-        for(int i=0;i<hoogte;i++)
-        {
-            for(int j=0;j<breedte;j++)
+        FileOutputStream fos = new FileOutputStream(new File(standaardOpslagMap +"/" +bestandsNaam));
+        for(int i=0;i<hoogte;i++)       //Converteert het veld naar een array
+        {                               //van bytes, om deze zo compact mogelijk
+            for(int j=0;j<breedte;j++)  //op te slaan.
             {
                 int elementPlace = i*breedte+j+16;
                 int bitnr = elementPlace % 8;
