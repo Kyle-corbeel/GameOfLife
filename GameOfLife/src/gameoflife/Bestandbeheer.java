@@ -41,6 +41,7 @@ public class Bestandbeheer {
     public Veld laadVeld(String bestandsNaam) throws FileNotFoundException, IOException
     {
         byte[] data = new byte[1000];
+        byte[] test = new byte[2];
         FileInputStream fis = new FileInputStream(bestandsNaam);
         Veldbeheer veldbeh = new Veldbeheer();
         fis.read(data);
@@ -61,7 +62,8 @@ public class Bestandbeheer {
         {
             for(int bi=0;bi<8;bi++)
             {
-                if(data[by]>>(7-bi)== 0b00000001)
+                test[0] = (byte) (data[by]>>(7-bi));
+                if((data[by]>>(7-bi) & 0b00000001) == 0b00000001)
                 {
                     veldMatrix[i][j] = true;
                 }
