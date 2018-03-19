@@ -76,7 +76,7 @@ public class Veld {
      * @return returned het aantal levende buren
      */
     
-    public int aantalBuren(int i,int j)
+    public synchronized int aantalBuren(int i,int j)
     {
         Integer aantal = 0;
         
@@ -102,7 +102,7 @@ public class Veld {
      * @return returned de staat van de cel: True-Levend, False-dood
      */
     
-    public boolean getCelStatus(int i, int j)
+    public synchronized boolean getCelStatus(int i, int j)
     {
         return(veldMatrix[i][j]);
     }
@@ -113,7 +113,7 @@ public class Veld {
      * @param j de kolom van de cel
      */
     
-    public void toggleCel(int i, int j)
+    public synchronized void toggleCel(int i, int j)
     {
         veldMatrix[i][j] =  !veldMatrix[i][j];
     }

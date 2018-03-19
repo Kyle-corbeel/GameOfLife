@@ -5,11 +5,14 @@
  */
 package gameoflife;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Dieter Nuytemans en Kyle Corbeel
  */
-public class SimulatieBestuur {
+public class SimulatieBestuur implements Runnable{
     
     //Simulatieveld, wordt doorgegeven vanuit een 'bovenliggend' object
     Veld veld;
@@ -70,21 +73,28 @@ public class SimulatieBestuur {
     /**
      * Blijf lopen tot er op stop gedrukt wordt
      * @param snelheid (stappen per seconde)
+     * @throws java.lang.InterruptedException
      */
     public void play(int snelheid) throws InterruptedException
     {
+        //Play wordt aangezet
         this.play = true;
+        
+        //Negatieve argumenten vermijden
         if (snelheid <= 0)
             snelheid = 1;
         
+        //Wachttijd voordat een thread start berekenen
         long wachttijd = 1000 / snelheid; //in ms
         
+        //Simulatiethread aanmaken
         Thread simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
         simulatie.start();
         
         //Zolang play aanstaat, blijft de simulatie lopen aan een bepaalde snelheid
         while(this.play) {
             
+            //Wacht tot de vorige simulatie klaar is
             try {
                 simulatie.join();
             } catch(Exception e)
@@ -92,12 +102,14 @@ public class SimulatieBestuur {
                 System.out.println(e);
             }
             
+            //Nieuwe simulatie starten als play aanstaat
             if (this.play) {
-                //Thread aanmaken
+                //Simulatiethread aanmaken
                 simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
 
-                //Thread starten en wachten om de snelheid te behouden
+                //Thread starten en even wachten om de gewenste snelheid te benaderen
                 try {
+                    veld.printVeld();
                     simulatie.start();
                     simulatie.sleep(wachttijd);
                 } catch(Exception e)
@@ -138,5 +150,21 @@ public class SimulatieBestuur {
             }
         }
         return false;
+    }
+
+    @Override
+    public void run() {
+        //Veld doorgeven
+        this.veld = veld;
+        
+        //Standaardinstellingen initialiseren (Zoals in Conway's Game Of Life)
+        this.minBlijfLevend = 2;
+        this.maxBlijfLevend = 3;
+        this.minWordtLevend = 3;
+        this.maxWordtLevend = 3;
+        
+        //Standaard speelt de simulatie niet
+        this.play = false;
+        
     }
 }

@@ -13,6 +13,10 @@ public class SimulatieThread implements Runnable{
     
     //Simulatieveld
     private Veld veld;
+    private Veld tempveld;
+    
+    //Lock method
+    
     
     //De spelregels
     //Hoeveel levende buren er min/max nodig zijn om levend te blijven
@@ -33,7 +37,7 @@ public class SimulatieThread implements Runnable{
      */
     SimulatieThread(Veld veld, int minBlijfL, int maxBlijfL, int minWordtL, int maxWordtL) {
         //Initialiseer het veld en stel huidige regels in
-        this.veld = veld;
+        this.tempveld = veld;
         
         //Instellingen doorgeven
         this.minBlijfLevend = minBlijfL;
@@ -46,22 +50,31 @@ public class SimulatieThread implements Runnable{
     public void run() {
         int numBuren;
         //while(running) {
-            for (int i = 0; i < veld.getBreedte(); i++) {
-                for (int j = 0; j < veld.getHoogte(); j++) {
-                    numBuren = veld.aantalBuren(i, j);
+            for (int i = 0; i < tempveld.getBreedte(); i++) {
+                
+                for (int j = 0; j < tempveld.getHoogte(); j++) {
+                    
+                    numBuren = tempveld.aantalBuren(i, j);
+                    
                     //Als het veld levend is
-                    if (veld.getCelStatus(i,j)) {
+                    if (tempveld.getCelStatus(i,j)) {
+                        
                         //Checken of er voldaan is aan de regels, toggle cel indien nodig
                         if (numBuren < minBlijfLevend || numBuren > maxBlijfLevend)
-                            veld.toggleCel(i, j);
+                            tempveld.toggleCel(i, j);
+                        
                     } else { //Als het veld niet levend is
+                        
                         //Checken of er voldaan is aan de regels, toggle cel indien nodig
                         if (numBuren >= minWordtLevend && numBuren <= maxWordtLevend)
-                            veld.toggleCel(i, j);
+                            tempveld.toggleCel(i, j);
+                        
                     }
                 }
             }
-            veld.printVeld();
+            
+            //Tempveld opslaan naar het object veld
+            veld = tempveld;
         //}
     }
 }

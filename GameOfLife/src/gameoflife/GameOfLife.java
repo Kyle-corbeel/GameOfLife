@@ -5,6 +5,8 @@
  */
 package gameoflife;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  *
  * @author kyle-
@@ -17,21 +19,21 @@ public class GameOfLife {
      */
     
     public static void main(String[] args) throws Exception {
-        // TODO code application logic here
         try{
             Veldbeheer veldbeheer1 = new Veldbeheer();
             Bestandbeheer bestandH1 = new Bestandbeheer();
-            
-            Veld veld1 = veldbeheer1.maakVeld(100, 100);
-            veld1.printVeld();
+            Veld veld1 = veldbeheer1.maakVeld(10, 10);
             veldbeheer1.vulVeldRandom(veld1, 50);
-            veld1.printVeld();
             SimulatieBestuur simulatieBestuur = new SimulatieBestuur(veld1);
-            simulatieBestuur.stap(1);
+            Thread simBestuur = new Thread(simulatieBestuur);
+            simBestuur.start();
             veld1.printVeld();
-            bestandH1.saveVeld(veld1, "output.txt");
-            veld1 = bestandH1.laadVeld("output.txt");
-            veld1.printVeld();
+            
+            simulatieBestuur.play(1);
+
+            //bestandH1.saveVeld(veld1, "output.txt");
+            //veld1 = bestandH1.laadVeld("output.txt");
+            //veld1.printVeld();
         }
         catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
