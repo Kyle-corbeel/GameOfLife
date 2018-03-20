@@ -5,18 +5,23 @@
  */
 package gameoflife;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Dieter Nuytemans en Kyle Corbeel
  */
 public class SimulatieThread implements Runnable{
     
+    //Speelt of niet
+    private boolean play = true;
+    
+    //Wachttijd tussen simulaties
+    private long wachttijd;
+    
     //Simulatieveld
     private Veld veld;
-    private Veld tempveld;
-    
-    //Lock method
-    
     
     //De spelregels
     //Hoeveel levende buren er min/max nodig zijn om levend te blijven
@@ -35,9 +40,21 @@ public class SimulatieThread implements Runnable{
      * @param minWordtL
      * @param maxWordtL
      */
-    SimulatieThread(Veld veld, int minBlijfL, int maxBlijfL, int minWordtL, int maxWordtL) {
-        //Initialiseer het veld en stel huidige regels in
-        this.tempveld = veld;
+    SimulatieThread(Veld veld, int minBlijfL, int maxBlijfL, int minWordtL, int maxWordtL, int snelheid) {
+        
+        this.veld = veld;
+        
+        long correctieSnelheid;
+        
+        if (snelheid == -1) 
+            correctieSnelheid = 1000;
+        else if (snelheid < 1)
+            correctieSnelheid = 1;
+        else
+            correctieSnelheid = snelheid;
+        
+        //Wachttijd berekenen
+        this.wachttijd = 1000 / correctieSnelheid; //in ms
         
         //Instellingen doorgeven
         this.minBlijfLevend = minBlijfL;
@@ -45,36 +62,76 @@ public class SimulatieThread implements Runnable{
         this.minWordtLevend = minWordtL;
         this.maxWordtLevend = maxWordtL;
     }
-
-    @Override
-    public void run() {
+    
+    /**
+     * Voer één simulatiestap uit
+     */
+    public void stap()
+    {
         int numBuren;
-        //while(running) {
+        Veld tempveld = null;
+        
+        this.play = true;
+        
+        try {
+            tempveld = this.veld.clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(SimulatieThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (tempveld != null)
+        {
             for (int i = 0; i < tempveld.getBreedte(); i++) {
-                
+
                 for (int j = 0; j < tempveld.getHoogte(); j++) {
-                    
+
                     numBuren = tempveld.aantalBuren(i, j);
-                    
+
                     //Als het veld levend is
                     if (tempveld.getCelStatus(i,j)) {
-                        
+
                         //Checken of er voldaan is aan de regels, toggle cel indien nodig
                         if (numBuren < minBlijfLevend || numBuren > maxBlijfLevend)
                             tempveld.toggleCel(i, j);
-                        
+
                     } else { //Als het veld niet levend is
-                        
+
                         //Checken of er voldaan is aan de regels, toggle cel indien nodig
                         if (numBuren >= minWordtLevend && numBuren <= maxWordtLevend)
                             tempveld.toggleCel(i, j);
-                        
+
                     }
                 }
             }
-            
             //Tempveld opslaan naar het object veld
             veld = tempveld;
-        //}
+        }
+    }
+    
+    /**
+     * Stop simulatie zodra de huidige afgerond is
+     */
+    public void stop()
+    {
+        this.play = false;
+    }
+    
+    @Override
+    public void run() {       
+        //Zolang play aanstaat, blijft de simulatie lopen aan een bepaalde snelheid
+        while(this.play) {
+            //Voer een simulatiestap uit
+            stap();
+            
+            //Wachten zodat de speelsnelheid klopt
+            try {
+                Thread.sleep(wachttijd);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(SimulatieThread.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            //Print het veld uit(enkel voor testfase)
+            veld.printVeld();
+        }
     }
 }

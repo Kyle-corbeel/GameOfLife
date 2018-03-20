@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author Dieter Nuytemans en Kyle Corbeel
  */
-public class SimulatieBestuur implements Runnable{
+public class SimulatieBestuur{
     
     //Simulatieveld, wordt doorgegeven vanuit een 'bovenliggend' object
     Veld veld;
@@ -25,8 +25,9 @@ public class SimulatieBestuur implements Runnable{
     private int minWordtLevend;
     private int maxWordtLevend;
     
-    //Variabele die aangeeft of er gesimuleerd wordt aan +/- vaste snelheid
-    private boolean play;
+    //De simulatiethread
+    Thread simThread;
+    SimulatieThread simulatie;
     
     /**
      * Constructor van SimulatieBestuur
@@ -42,9 +43,6 @@ public class SimulatieBestuur implements Runnable{
         this.maxBlijfLevend = 3;
         this.minWordtLevend = 3;
         this.maxWordtLevend = 3;
-        
-        //Standaard speelt de simulatie niet
-        this.play = false;
     }
     
     /**
@@ -54,15 +52,25 @@ public class SimulatieBestuur implements Runnable{
      */
     public void stap(int aantal) throws Exception
     {
+        //Wachten op de vorige simulatie, mocht er nog één bezig zijn
+        try {
+            simThread.join();
+        } catch (Exception e)
+        {
+            System.out.println("Stap() in orde, er runt geen andere simulatie (exception: " + e + ")");
+        }
+        
         for (int i = 0; i < aantal; i++)
         {
             //Maak nieuwe simulatie en start
-            Thread simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
-            simulatie.start();
+            simulatie = new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend, -1);
+            simThread = new Thread(simulatie);
+            simThread.start();
+            stop();
             
             //Wacht tot simulatie klaar is
             try {
-                simulatie.join();
+                simThread.join();
             } catch(Exception e)
             {
                 System.out.println(e);
@@ -77,54 +85,25 @@ public class SimulatieBestuur implements Runnable{
      */
     public void play(int snelheid) throws InterruptedException
     {
-        //Play wordt aangezet
-        this.play = true;
-        
-        //Negatieve argumenten vermijden
-        if (snelheid <= 0)
-            snelheid = 1;
-        
-        //Wachttijd voordat een thread start berekenen
-        long wachttijd = 1000 / snelheid; //in ms
+        //Wachten op de vorige simulatie, mocht er nog één bezig zijn
+        try {
+            simThread.join();
+        } catch (Exception e)
+        {
+            System.out.println("Play() in orde, er runt geen andere simulatie (exception: " + e + ")");
+        }
         
         //Simulatiethread aanmaken
-        Thread simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
-        simulatie.start();
-        
-        //Zolang play aanstaat, blijft de simulatie lopen aan een bepaalde snelheid
-        while(this.play) {
-            
-            //Wacht tot de vorige simulatie klaar is
-            try {
-                simulatie.join();
-            } catch(Exception e)
-            {
-                System.out.println(e);
-            }
-            
-            //Nieuwe simulatie starten als play aanstaat
-            if (this.play) {
-                //Simulatiethread aanmaken
-                simulatie = new Thread(new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend));
-
-                //Thread starten en even wachten om de gewenste snelheid te benaderen
-                try {
-                    veld.printVeld();
-                    simulatie.start();
-                    simulatie.sleep(wachttijd);
-                } catch(Exception e)
-                {
-                    System.out.println(e);
-                }
-            }
-        }
+        simThread = new Thread(simulatie = new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend, snelheid));
+        simThread.start();
     }
     
     /**
-     * Methode om de simulatie te stoppen
+     * Stop de simulatie
      */
-    public void stop() {
-        this.play = false;
+    public void stop()
+    {
+        simulatie.stop();
     }
     
     /**
@@ -150,21 +129,5 @@ public class SimulatieBestuur implements Runnable{
             }
         }
         return false;
-    }
-
-    @Override
-    public void run() {
-        //Veld doorgeven
-        this.veld = veld;
-        
-        //Standaardinstellingen initialiseren (Zoals in Conway's Game Of Life)
-        this.minBlijfLevend = 2;
-        this.maxBlijfLevend = 3;
-        this.minWordtLevend = 3;
-        this.maxWordtLevend = 3;
-        
-        //Standaard speelt de simulatie niet
-        this.play = false;
-        
     }
 }
