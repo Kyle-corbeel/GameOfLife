@@ -9,7 +9,7 @@ package gameoflife;
  *
  * @author kyle-
  */
-public class Veld {
+public class Veld implements Cloneable{
     private Integer hoogte;
     private Integer breedte;
     private Boolean[][] veldMatrix;
@@ -136,6 +136,16 @@ public class Veld {
     public int getBreedte ()
     {
         return(breedte);
+    }
+    
+    /**
+     * Methode om een object van Veld te dupliceren
+     * @return Veld, returned zichzelf
+     * @throws CloneNotSupportedException indien clone() niet geïmplementeerd is
+     */
+    @Override
+    public Veld clone() throws CloneNotSupportedException {
+        return (Veld)super.clone();
     }
 }
 

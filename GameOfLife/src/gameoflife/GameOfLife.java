@@ -5,7 +5,7 @@
  */
 package gameoflife;
 
-import java.util.concurrent.TimeUnit;
+import java.io.IOException;
 
 /**
  *
@@ -18,18 +18,19 @@ public class GameOfLife {
      * @param args the command line arguments
      */
     
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException, Exception {
         try{
             Veldbeheer veldbeheer1 = new Veldbeheer();
             Bestandbeheer bestandH1 = new Bestandbeheer();
             Veld veld1 = veldbeheer1.maakVeld(10, 10);
             veldbeheer1.vulVeldRandom(veld1, 50);
-            SimulatieBestuur simulatieBestuur = new SimulatieBestuur(veld1);
-            Thread simBestuur = new Thread(simulatieBestuur);
-            simBestuur.start();
+            SimulatieBestuur simBestuur = new SimulatieBestuur(veld1);
+            
+            simBestuur.play(-1);
+            //simBestuur.stop();
             veld1.printVeld();
             
-            simulatieBestuur.play(1);
+            
 
             //bestandH1.saveVeld(veld1, "output.txt");
             //veld1 = bestandH1.laadVeld("output.txt");
