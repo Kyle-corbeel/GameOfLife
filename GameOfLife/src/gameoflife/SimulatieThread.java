@@ -81,9 +81,9 @@ public class SimulatieThread implements Runnable{
         
         if (tempveld != null)
         {
-            for (int i = 0; i < tempveld.getBreedte(); i++) {
+            for (int i = 0; i < tempveld.getHoogte(); i++) {
 
-                for (int j = 0; j < tempveld.getHoogte(); j++) {
+                for (int j = 0; j < tempveld.getBreedte(); j++) {
 
                     numBuren = tempveld.aantalBuren(i, j);
 
@@ -104,7 +104,7 @@ public class SimulatieThread implements Runnable{
                 }
             }
             //Tempveld opslaan naar het object veld
-            veld = tempveld;
+            this.veld = tempveld;
         }
     }
     
