@@ -85,10 +85,11 @@ public class SimulatieThread implements Runnable{
 
                 for (int j = 0; j < tempveld.getBreedte(); j++) {
 
-                    numBuren = tempveld.aantalBuren(i, j);
-
+                    numBuren = veld.aantalBuren(i, j);
+                    System.out.print(numBuren + " ");
+                    
                     //Als het veld levend is
-                    if (tempveld.getCelStatus(i,j)) {
+                    if (veld.getCelStatus(i,j)) {
 
                         //Checken of er voldaan is aan de regels, toggle cel indien nodig
                         if (numBuren < minBlijfLevend || numBuren > maxBlijfLevend)
@@ -102,9 +103,10 @@ public class SimulatieThread implements Runnable{
 
                     }
                 }
+                System.out.println("");
             }
             //Tempveld opslaan naar het object veld
-            this.veld = tempveld;
+            veld = tempveld;
         }
     }
     

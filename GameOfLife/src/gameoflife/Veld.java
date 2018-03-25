@@ -53,7 +53,7 @@ public class Veld implements Cloneable{
         {
             for (j=0; j<breedte; j++)
             {
-                if(veldMatrix[i][j]==false)
+                if(!veldMatrix[i][j])
                     System.out.print("X  ");
                 else 
                     System.out.print("O  ");
@@ -84,10 +84,14 @@ public class Veld implements Cloneable{
         {
             for(int m = j - 1; m < j + 2 ; m++)
             {
+                //Grenzen van het veld controleren
                 if(k >= 0 && k < hoogte && m >= 0 && m < breedte)
                 {
-                    if(veldMatrix[k][m])
-                        aantal++;
+                    //Zichzelf niet meetellen
+                    if (!(k == i && m == j))
+                        //Enkel levende cellen meetellen
+                        if(veldMatrix[k][m])
+                            aantal++;
                 }
             }
         }

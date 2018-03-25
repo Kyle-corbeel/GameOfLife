@@ -23,12 +23,19 @@ public class GameOfLife {
             Veldbeheer veldbeheer1 = new Veldbeheer();
             Bestandbeheer bestandH1 = new Bestandbeheer();
             Veld veld1 = veldbeheer1.maakVeld(10, 10);
-            veldbeheer1.vulVeldRandom(veld1, 50);
+            //Glider aanmaken om werking te testen
+            veld1.toggleCel(0, 1);
+            veld1.toggleCel(1, 2);
+            veld1.toggleCel(2, 0);
+            veld1.toggleCel(2, 1);
+            veld1.toggleCel(2, 2);
+            veld1.printVeld();
             SimulatieBestuur simBestuur = new SimulatieBestuur(veld1);
             
-            simBestuur.play(-1);
+            simBestuur.play(1);
+            
+            //simBestuur.play(1);
             //simBestuur.stop();
-            veld1.printVeld();
             
             
 

@@ -39,8 +39,11 @@ public class SimulatieBestuur{
         this.veld = veld;
         
         //Standaardinstellingen initialiseren (Zoals in Conway's Game Of Life)
+        //Bij twee of drie levende buren, blijft een cel levend
+        //Anders sterft de cel
         this.minBlijfLevend = 2;
         this.maxBlijfLevend = 3;
+        //Door omgeven te worden door precies drie levende buurcellen wordt een dode cel levend
         this.minWordtLevend = 3;
         this.maxWordtLevend = 3;
     }
@@ -66,6 +69,7 @@ public class SimulatieBestuur{
             simulatie = new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend, -1);
             simThread = new Thread(simulatie);
             simThread.start();
+            //Stop de simulatie zodat er slechts één stap doorlopen wordt
             stop();
             
             //Wacht tot simulatie klaar is
@@ -75,6 +79,7 @@ public class SimulatieBestuur{
             {
                 System.out.println(e);
             }
+            veld.printVeld();
         }
     }
     
