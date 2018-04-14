@@ -9,7 +9,7 @@ package gameoflife;
  *
  * @author kyle-
  */
-public class Veld implements Cloneable{
+public class Veld {
     private Integer hoogte;
     private Integer breedte;
     private Boolean[][] veldMatrix;
@@ -27,19 +27,17 @@ public class Veld implements Cloneable{
     {
         if (tempHoogte ==0 || tempBreedte ==0)
             throw new IllegalArgumentException("Dimensies moeten groter zijn dan 0");
-        hoogte = tempHoogte;
-        breedte = tempBreedte;
+        this.hoogte = tempHoogte;
+        this.breedte = tempBreedte;
         Boolean[][] tempVeldMatrix = new Boolean[hoogte][breedte];
         for (i=0; i<hoogte; i++)
         {
             for (j=0; j<breedte; j++)
             {
                 tempVeldMatrix[i][j] = false;
-                //System.out.println(i +":" +j);
             }
         }
         veldMatrix = tempVeldMatrix;
-        //System.out.println(veldMatrix.length +" op " +veldMatrix[1].length);
     }
     
     /**
@@ -128,7 +126,6 @@ public class Veld implements Cloneable{
      * Returned de hoogte van de matrix
      * @return 
      */
-    
     public int getHoogte ()
     {
         return(hoogte);
@@ -138,20 +135,9 @@ public class Veld implements Cloneable{
      * Returned de breedte van de matrix
      * @return 
      */
-    
     public int getBreedte ()
     {
         return(breedte);
-    }
-    
-    /**
-     * Methode om een object van Veld te dupliceren
-     * @return Veld, returned zichzelf
-     * @throws CloneNotSupportedException indien clone() niet geïmplementeerd is
-     */
-    @Override
-    public Veld clone() throws CloneNotSupportedException {
-        return (Veld)super.clone();
     }
 }
 

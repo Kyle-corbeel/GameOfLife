@@ -79,7 +79,7 @@ public class SimulatieBestuur{
             {
                 System.out.println(e);
             }
-            veld.printVeld();
+            //veld.printVeld();
         }
     }
     

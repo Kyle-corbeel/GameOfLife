@@ -29,6 +29,12 @@ public class GameOfLife {
             veld1.toggleCel(2, 0);
             veld1.toggleCel(2, 1);
             veld1.toggleCel(2, 2);
+            
+            //Lijn van drie eenheden aanmaken om de werking te testen
+            veld1.toggleCel(5, 6);
+            veld1.toggleCel(5, 7);
+            veld1.toggleCel(5, 8);
+            
             veld1.printVeld();
             SimulatieBestuur simBestuur = new SimulatieBestuur(veld1);
             
@@ -38,10 +44,8 @@ public class GameOfLife {
             System.out.println("1,1 : " + veld1.aantalBuren(1, 1) + " - " + veld1.getCelStatus(1, 1));
             */            
 
-            simBestuur.stap(1);
-            simBestuur.stap(1);
-            simBestuur.stap(1);
-            simBestuur.stap(1);
+            simBestuur.play(1);
+            
             //bestandH1.saveVeld(veld1, "output.txt");
             //veld1 = bestandH1.laadVeld("output.txt");
             //veld1.printVeld();

@@ -70,13 +70,14 @@ public class SimulatieThread implements Runnable{
     {
         int numBuren;
         Veld tempveld = null;
-        
         this.play = true;
         
+        //Maak een kopie van het veld
         try {
-            tempveld = this.veld.clone();
-        } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(SimulatieThread.class.getName()).log(Level.SEVERE, null, ex);
+            tempveld = new Veld(veld.getHoogte(), veld.getBreedte());
+            kopieerVeld(veld, tempveld);
+        } catch (Exception e) {
+            System.out.println("Er ging iets mis met het kopiëren van het veld voor de simulatie!\n" + e);
         }
         
         if (tempveld != null)
@@ -86,27 +87,32 @@ public class SimulatieThread implements Runnable{
                 for (int j = 0; j < tempveld.getBreedte(); j++) {
 
                     numBuren = veld.aantalBuren(i, j);
-                    System.out.print(numBuren + " ");
+                    //System.out.print(numBuren + " ");
                     
                     //Als het veld levend is
                     if (veld.getCelStatus(i,j)) {
 
                         //Checken of er voldaan is aan de regels, toggle cel indien nodig
-                        if (numBuren < minBlijfLevend || numBuren > maxBlijfLevend)
+                        if (numBuren >= minBlijfLevend && numBuren <= maxBlijfLevend) {
                             tempveld.toggleCel(i, j);
-
+                        }
                     } else { //Als het veld niet levend is
 
                         //Checken of er voldaan is aan de regels, toggle cel indien nodig
-                        if (numBuren >= minWordtLevend && numBuren <= maxWordtLevend)
+                        if (numBuren >= minWordtLevend && numBuren <= maxWordtLevend) {
                             tempveld.toggleCel(i, j);
-
+                        }
                     }
                 }
-                System.out.println("");
+                //System.out.println();
             }
-            //Tempveld opslaan naar het object veld
-            veld = tempveld;
+            
+            //Kopiëer tempveld naar veld
+            try {
+                kopieerVeld(tempveld, veld);
+            } catch (Exception e) {
+                System.out.println("Er ging iets mis met het kopiëren van het veld na de simulatie!\n" + e);
+            }
         }
     }
     
@@ -116,6 +122,29 @@ public class SimulatieThread implements Runnable{
     public void stop()
     {
         this.play = false;
+    }
+    
+    /**
+     * Vul een Veld (nieuwVeld) met dezelfde waarden als een ander Veld (veld)
+     * @param veld veld dat gekopiëerd zal worden
+     * @param nieuwVeld veld waar de waarden in geplakt worden
+     * @throws java.lang.Exception: Wanneer de dimensies van de velden niet overeen komen, wordt er een Exception gethrowed
+     */
+    public void kopieerVeld(Veld veld, Veld nieuwVeld) throws Exception
+    {
+        if (veld.getHoogte() == nieuwVeld.getHoogte() && veld.getBreedte() == nieuwVeld.getBreedte())
+        {
+            for (int i = 0; i < veld.getHoogte(); i++)
+            {
+                for (int j = 0; j < veld.getBreedte(); j++)
+                {
+                    if (veld.getCelStatus(i, j))
+                        nieuwVeld.toggleCel(i,j);
+                }
+            }
+        } else {
+            throw new Exception("De groottes van de velden komen niet overeen! Het kopiëren is stopgezet.");
+        }
     }
     
     @Override
