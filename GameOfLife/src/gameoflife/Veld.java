@@ -82,16 +82,17 @@ public class Veld implements Cloneable{
         
         for (int k = i - 1; k < i + 2; k++)
         {
-            for(int m = j - 1; m < j + 2 ; m++)
+            for(int m = j - 1; m < j + 2; m++)
             {
                 //Grenzen van het veld controleren
-                if(k >= 0 && k < hoogte && m >= 0 && m < breedte)
+                if((k >= 0 && k < hoogte) && (m >= 0 && m < breedte))
                 {
                     //Zichzelf niet meetellen
                     if (!(k == i && m == j))
                         //Enkel levende cellen meetellen
                         if(veldMatrix[k][m])
                             aantal++;
+                    }
                 }
             }
         }

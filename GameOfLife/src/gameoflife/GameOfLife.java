@@ -32,13 +32,16 @@ public class GameOfLife {
             veld1.printVeld();
             SimulatieBestuur simBestuur = new SimulatieBestuur(veld1);
             
-            simBestuur.play(1);
-            
-            //simBestuur.play(1);
-            //simBestuur.stop();
-            
-            
+            /* Test of aantalBuren werkt 
+            System.out.println("0,2 : " + veld1.aantalBuren(0, 2) + " - " + veld1.getCelStatus(0, 2));
+            System.out.println("1,0 : " + veld1.aantalBuren(1, 0) + " - " + veld1.getCelStatus(1, 0));
+            System.out.println("1,1 : " + veld1.aantalBuren(1, 1) + " - " + veld1.getCelStatus(1, 1));
+            */            
 
+            simBestuur.stap(1);
+            simBestuur.stap(1);
+            simBestuur.stap(1);
+            simBestuur.stap(1);
             //bestandH1.saveVeld(veld1, "output.txt");
             //veld1 = bestandH1.laadVeld("output.txt");
             //veld1.printVeld();
