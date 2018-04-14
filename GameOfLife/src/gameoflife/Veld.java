@@ -89,6 +89,7 @@ public class Veld implements Cloneable{
                 {
                     //Zichzelf niet meetellen
                     if (!(k == i && m == j))
+                    {
                         //Enkel levende cellen meetellen
                         if(veldMatrix[k][m])
                             aantal++;
