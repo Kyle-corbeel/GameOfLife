@@ -52,9 +52,9 @@ public class Veld {
             for (j=0; j<breedte; j++)
             {
                 if(!veldMatrix[i][j])
-                    System.out.print("X  ");
-                else 
                     System.out.print("O  ");
+                else 
+                    System.out.print("X  ");
             }
             System.out.println();
         }
