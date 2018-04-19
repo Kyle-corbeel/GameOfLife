@@ -5,6 +5,12 @@
  */
 package gameoflife;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Dieter
@@ -40,12 +46,12 @@ public class UserInterface extends javax.swing.JFrame {
         jFileChooser1 = new javax.swing.JFileChooser();
         dialogSaveFile = new javax.swing.JDialog();
         jFileChooser2 = new javax.swing.JFileChooser();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        veldContainer = new javax.swing.JPanel();
         playButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
         speedSlider = new javax.swing.JSlider();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuNewVeld = new javax.swing.JMenuItem();
@@ -58,9 +64,7 @@ public class UserInterface extends javax.swing.JFrame {
 
         jMenuItem1.setText("jMenuItem1");
 
-        dialogNewFile.setMaximumSize(new java.awt.Dimension(1920, 1080));
         dialogNewFile.setMinimumSize(new java.awt.Dimension(200, 160));
-        dialogNewFile.setPreferredSize(new java.awt.Dimension(192, 107));
 
         textHoogte.setMaximumSize(new java.awt.Dimension(6, 22));
 
@@ -175,42 +179,47 @@ public class UserInterface extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 41, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 43, Short.MAX_VALUE)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Game Of Life");
+        setSize(new java.awt.Dimension(1400, 1200));
+
+        veldContainer.setBackground(new java.awt.Color(90, 120, 240));
+
+        javax.swing.GroupLayout veldContainerLayout = new javax.swing.GroupLayout(veldContainer);
+        veldContainer.setLayout(veldContainerLayout);
+        veldContainerLayout.setHorizontalGroup(
+            veldContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 934, Short.MAX_VALUE)
+        );
+        veldContainerLayout.setVerticalGroup(
+            veldContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 619, Short.MAX_VALUE)
         );
 
         playButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         playButton.setText("Play");
+        playButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playButtonActionPerformed(evt);
+            }
+        });
 
         nextButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         nextButton.setText("Next");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Speed");
-
-        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 43, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
 
         jMenu1.setText("File");
 
@@ -270,28 +279,25 @@ public class UserInterface extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(veldContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(playButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nextButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(669, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(playButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nextButton))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 659, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 386, Short.MAX_VALUE)
+                .addComponent(veldContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(playButton)
                     .addComponent(nextButton))
@@ -342,6 +348,10 @@ public class UserInterface extends javax.swing.JFrame {
         dialogSaveFile.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_playButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -376,7 +386,45 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void refreshVeld(Veld veld)
+    {
+        int gridSizeX = veld.getBreedte();
+        int gridSizeY = veld.getHoogte();
+        
+        JPanel cont = new JPanel();
+        Dimension dim = new Dimension(1000,1000);
+        cont.setMinimumSize(dim);
+        cont.setMaximumSize(dim);
+        cont.setPreferredSize(dim);
+        cont.setBackground(Color.red);
+        
+        JPanel p = new JPanel();
+        p.setBackground(Color.green);
+        p.setLayout(new GridLayout(gridSizeX, gridSizeY));        
+        p.setMaximumSize(dim);
+        p.setMinimumSize(dim);
+        p.setPreferredSize(dim);
+        
+        //Individuele JPanel's voor elke cel
+        JPanel a;
+        for (int i = 0; i < gridSizeX; i++)
+        {
+            for (int j = 0; j < gridSizeY; j++)
+            {
+                a = new JPanel();
 
+                a.setBackground((i+j) % 2 == 0 ? Color.yellow : Color.red);
+                
+                p.add(a);
+            }
+        }
+
+        cont.add(p);
+        veldContainer.add(cont);
+    }
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog dialogLaadFile;
     private javax.swing.JDialog dialogNewFile;
@@ -389,7 +437,6 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelHoogte;
     private javax.swing.JLabel labelKans;
@@ -406,5 +453,6 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JTextField textBreedte;
     private javax.swing.JTextField textHoogte;
     private javax.swing.JTextField textKans;
+    private javax.swing.JPanel veldContainer;
     // End of variables declaration//GEN-END:variables
 }

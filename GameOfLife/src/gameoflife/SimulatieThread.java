@@ -160,9 +160,6 @@ public class SimulatieThread implements Runnable{
             } catch (InterruptedException ex) {
                 Logger.getLogger(SimulatieThread.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            //Print het veld uit(enkel voor testfase)
-            veld.printVeld();
         }
     }
 }
