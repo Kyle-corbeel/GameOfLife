@@ -8,7 +8,6 @@ package gameoflife;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -16,12 +15,22 @@ import javax.swing.JPanel;
  * @author Dieter
  */
 public class UserInterface extends javax.swing.JFrame {
-
+    
+    private javax.swing.JPanel veld;
+    private GridLayout layout;
+    
     /**
      * Creates new form UserInterface
      */
     public UserInterface() {
         initComponents();
+        
+        layout = new GridLayout(20,20);
+        veld = new JPanel();
+        
+        veld.setLayout(layout);
+        veld.setSize(500,500);
+        veldContainer.add(veld);
     }
 
     /**
@@ -195,17 +204,7 @@ public class UserInterface extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1400, 1200));
 
         veldContainer.setBackground(new java.awt.Color(90, 120, 240));
-
-        javax.swing.GroupLayout veldContainerLayout = new javax.swing.GroupLayout(veldContainer);
-        veldContainer.setLayout(veldContainerLayout);
-        veldContainerLayout.setHorizontalGroup(
-            veldContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 934, Short.MAX_VALUE)
-        );
-        veldContainerLayout.setVerticalGroup(
-            veldContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 619, Short.MAX_VALUE)
-        );
+        veldContainer.setLayout(new java.awt.BorderLayout());
 
         playButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         playButton.setText("Play");
@@ -414,7 +413,7 @@ public class UserInterface extends javax.swing.JFrame {
             {
                 a = new JPanel();
 
-                a.setBackground((i+j) % 2 == 0 ? Color.yellow : Color.red);
+                a.setBackground(veld.getCelStatus(i, j) ? Color.WHITE : Color.BLACK);
                 
                 p.add(a);
             }
@@ -422,9 +421,9 @@ public class UserInterface extends javax.swing.JFrame {
 
         cont.add(p);
         veldContainer.add(cont);
+        setVisible(true);
     }
 
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog dialogLaadFile;
     private javax.swing.JDialog dialogNewFile;

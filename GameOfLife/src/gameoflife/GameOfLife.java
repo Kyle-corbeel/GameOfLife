@@ -5,7 +5,10 @@
  */
 package gameoflife;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.io.IOException;
+
 
 /**
  *
@@ -14,14 +17,17 @@ import java.io.IOException;
 public class GameOfLife {
     
     
+    public static UserInterface UI;
+    
     /**
      * @param args the command line arguments
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
         
+        
         //Start user interface op
-        UserInterface UI = new UserInterface();
+        UI = new UserInterface();
         /* Set the Windows look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -51,7 +57,6 @@ public class GameOfLife {
                 UI.setVisible(true);
             }
         });
-                
         
         
         try{
@@ -78,13 +83,13 @@ public class GameOfLife {
             System.out.println("1,1 : " + veld1.aantalBuren(1, 1) + " - " + veld1.getCelStatus(1, 1));
             */            
             UI.refreshVeld(veld);
-            //simBestuur.play(1);
+            simBestuur.play(1);
             
             //bestandH1.saveVeld(veld1, "output.txt");
             //veld1 = bestandH1.laadVeld("output.txt");
             //veld1.printVeld();
         }
-        catch (IllegalArgumentException e) {
+        catch (Exception e) {
             System.out.println(e.getMessage());
         }
             

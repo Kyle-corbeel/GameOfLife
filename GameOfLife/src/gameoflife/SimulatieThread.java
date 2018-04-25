@@ -113,6 +113,7 @@ public class SimulatieThread implements Runnable{
             } catch (Exception e) {
                 System.out.println("Er ging iets mis met het kopiëren van het veld na de simulatie!\n" + e);
             }
+            GameOfLife.UI.refreshVeld(veld);
         }
     }
     
