@@ -5,29 +5,31 @@
  */
 package gameoflife;
 
+import java.awt.Color;
+
 /**
  *
  * @author kyle-
  */
 public class Personalisering {
-    private int[] kleurAchtergrond;
-    private int[] kleurDood;
-    private int[] kleurLevend;
+    
+    private Color kleurAchtergrond;
+    private Color kleurDood;
+    private Color kleurLevend;
     
     public Personalisering()
     {
-        int[] kleurAchtergrond = {125,125,125};
-        int[] kleurDood = {255,255,255};
-        int[] kleurLevend = {0,0,0};
-        
+        //Standaardkleuren initialiseren
+        kleurAchtergrond = Color.GRAY;
+        kleurDood = Color.BLACK;
+        kleurLevend = Color.WHITE;
     }
     
     /**
      * Verander de kleur van levende cellen
      * @param kleur gekozen kleur
      */
-    
-    public void kiesKleurLevend(int[] kleur)
+    public void kiesKleurLevend(Color kleur)
     {
         kleurLevend = kleur;
     }
@@ -36,8 +38,7 @@ public class Personalisering {
      * Verander de kleur van dode  cellen
      * @param kleur  gekozen kleur
      */
-    
-    public void kiesKleurDood(int[] kleur)
+    public void kiesKleurDood(Color kleur)
     {
         kleurDood = kleur;
     }
@@ -46,10 +47,36 @@ public class Personalisering {
      * Verand de kleur van de achtergrodn
      * @param kleur de gekozen kleur
      */
-    
-    public void kiesKleurAchtergrond(int[] kleur)
+    public void kiesKleurAchtergrond(Color kleur)
     {
         kleurAchtergrond = kleur;
+    }
+    
+    /**
+     * Vraag de kleur achtergrond op
+     * @return int[] kleur van achtergrond
+     */
+    public Color getKleurAchtergrond()
+    {
+        return kleurAchtergrond;
+    }
+    
+    /**
+     * Vraag de kleur van de levende cellen op
+     * @return int[] kleur van levende cellen
+     */
+    public Color getKleurLevend()
+    {
+        return kleurLevend;
+    }
+    
+    /**
+     * Vraag de kleur van de dode cellen op
+     * @return int[] kleur van dode cellen
+     */
+    public Color getKleurDood()
+    {
+        return kleurDood;
     }
     
 }

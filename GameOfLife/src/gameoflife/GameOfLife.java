@@ -5,8 +5,6 @@
  */
 package gameoflife;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.io.IOException;
 
 
@@ -53,46 +51,10 @@ public class GameOfLife {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 UI.setVisible(true);
             }
-        });
-        
-        
-        try{
-            Veldbeheer veldbeheer = new Veldbeheer();
-            Bestandbeheer bestandH1 = new Bestandbeheer();
-            Veld veld = veldbeheer.maakVeld(10, 10);
-            //Glider aanmaken om werking te testen
-            veld.toggleCel(0, 1);
-            veld.toggleCel(1, 2);
-            veld.toggleCel(2, 0);
-            veld.toggleCel(2, 1);
-            veld.toggleCel(2, 2);
-            
-            //Lijn van drie eenheden aanmaken om de werking te testen
-            veld.toggleCel(5, 6);
-            veld.toggleCel(5, 7);
-            veld.toggleCel(5, 8);
-            
-            SimulatieBestuur simBestuur = new SimulatieBestuur(veld);
-            
-            /* Test of aantalBuren werkt 
-            System.out.println("0,2 : " + veld1.aantalBuren(0, 2) + " - " + veld1.getCelStatus(0, 2));
-            System.out.println("1,0 : " + veld1.aantalBuren(1, 0) + " - " + veld1.getCelStatus(1, 0));
-            System.out.println("1,1 : " + veld1.aantalBuren(1, 1) + " - " + veld1.getCelStatus(1, 1));
-            */            
-            UI.refreshVeld(veld);
-            simBestuur.play(1);
-            
-            //bestandH1.saveVeld(veld1, "output.txt");
-            //veld1 = bestandH1.laadVeld("output.txt");
-            //veld1.printVeld();
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-            
+        });            
     }
-    
 }

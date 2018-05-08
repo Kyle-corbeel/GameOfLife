@@ -5,32 +5,72 @@
  */
 package gameoflife;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.io.IOException;
 import javax.swing.JPanel;
 
 /**
  *
  * @author Dieter
  */
-public class UserInterface extends javax.swing.JFrame {
+public final class UserInterface extends javax.swing.JFrame {
     
-    private javax.swing.JPanel veld;
+    private JPanel simVeld;
     private GridLayout layout;
+    
+    private Bestandbeheer bestandbeheer;
+    private Personalisering personalisering;
+    private SimulatieBestuur simulatieBestuur;
+    private Veldbeheer veldbeheer;
+    private Veld veld;
     
     /**
      * Creates new form UserInterface
      */
     public UserInterface() {
+        //User interface initialiseren en simulatieVeld klaarmaken
         initComponents();
         
         layout = new GridLayout(20,20);
-        veld = new JPanel();
+        simVeld = new JPanel();
         
-        veld.setLayout(layout);
-        veld.setSize(500,500);
-        veldContainer.add(veld);
+        simVeld.setLayout(layout);
+        simVeld.setSize(500,500);
+        veldContainer.add(simVeld);
+        
+        //Alle componenten aanmaken
+        try{
+            veldbeheer = new Veldbeheer();
+            bestandbeheer = new Bestandbeheer();
+            personalisering = new Personalisering();
+            
+            Veld veld = veldbeheer.maakVeld(10, 10);
+            //Glider aanmaken om werking te testen
+            veld.toggleCel(0, 1);
+            veld.toggleCel(1, 2);
+            veld.toggleCel(2, 0);
+            veld.toggleCel(2, 1);
+            veld.toggleCel(2, 2);
+            
+            //Lijn van drie eenheden aanmaken om de werking te testen
+            veld.toggleCel(5, 6);
+            veld.toggleCel(5, 7);
+            veld.toggleCel(5, 8);
+            
+            SimulatieBestuur simBestuur = new SimulatieBestuur(veld);
+               
+            refreshVeld(veld);
+            simBestuur.play(3);
+            
+            //bestandH1.saveVeld(veld1, "output.txt");
+            //veld1 = bestandH1.laadVeld("output.txt");
+            //veld1.printVeld();
+        }
+        catch (IOException | InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+        
     }
 
     /**
@@ -348,7 +388,7 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_playButtonActionPerformed
 
     /**
@@ -396,10 +436,9 @@ public class UserInterface extends javax.swing.JFrame {
         cont.setMinimumSize(dim);
         cont.setMaximumSize(dim);
         cont.setPreferredSize(dim);
-        cont.setBackground(Color.red);
+        cont.setBackground(personalisering.getKleurAchtergrond());
         
         JPanel p = new JPanel();
-        p.setBackground(Color.green);
         p.setLayout(new GridLayout(gridSizeX, gridSizeY));        
         p.setMaximumSize(dim);
         p.setMinimumSize(dim);
@@ -413,7 +452,7 @@ public class UserInterface extends javax.swing.JFrame {
             {
                 a = new JPanel();
 
-                a.setBackground(veld.getCelStatus(i, j) ? Color.WHITE : Color.BLACK);
+                a.setBackground(veld.getCelStatus(i, j) ? personalisering.getKleurLevend() : personalisering.getKleurDood());
                 
                 p.add(a);
             }
