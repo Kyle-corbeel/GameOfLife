@@ -5,12 +5,15 @@
  */
 package gameoflife;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
 /**
@@ -94,10 +97,7 @@ public final class UserInterface extends javax.swing.JFrame {
         lebelBreedte = new javax.swing.JLabel();
         labelKans = new javax.swing.JLabel();
         labelKans1 = new javax.swing.JLabel();
-        dialogLaadFile = new javax.swing.JDialog();
-        jFileChooser1 = new javax.swing.JFileChooser();
-        dialogSaveFile = new javax.swing.JDialog();
-        jFileChooser2 = new javax.swing.JFileChooser();
+        jButtonNewFileOK = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         colorPicker = new javax.swing.JColorChooser();
         veldContainer = new javax.swing.JPanel();
@@ -109,7 +109,7 @@ public final class UserInterface extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuNewVeld = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuSaveVeld = new javax.swing.JMenuItem();
         menuLaadVeld = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         menuKleurAchtergrond = new javax.swing.JMenuItem();
@@ -144,21 +144,31 @@ public final class UserInterface extends javax.swing.JFrame {
 
         labelKans1.setText("%");
 
+        jButtonNewFileOK.setText("OK");
+        jButtonNewFileOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNewFileOKActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout dialogNewFileLayout = new javax.swing.GroupLayout(dialogNewFile.getContentPane());
         dialogNewFile.getContentPane().setLayout(dialogNewFileLayout);
         dialogNewFileLayout.setHorizontalGroup(
             dialogNewFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dialogNewFileLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(dialogNewFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelHoogte)
-                    .addComponent(lebelBreedte)
-                    .addComponent(labelKans))
-                .addGap(38, 38, 38)
-                .addGroup(dialogNewFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(textHoogte, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(textBreedte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(textKans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(dialogNewFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonNewFileOK)
+                    .addGroup(dialogNewFileLayout.createSequentialGroup()
+                        .addGroup(dialogNewFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelHoogte)
+                            .addComponent(lebelBreedte)
+                            .addComponent(labelKans))
+                        .addGap(38, 38, 38)
+                        .addGroup(dialogNewFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(textHoogte, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                            .addComponent(textBreedte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(textKans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelKans1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -179,58 +189,9 @@ public final class UserInterface extends javax.swing.JFrame {
                     .addComponent(textKans, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelKans)
                     .addComponent(labelKans1))
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-
-        dialogLaadFile.setMinimumSize(new java.awt.Dimension(800, 500));
-
-        jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFileChooser1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout dialogLaadFileLayout = new javax.swing.GroupLayout(dialogLaadFile.getContentPane());
-        dialogLaadFile.getContentPane().setLayout(dialogLaadFileLayout);
-        dialogLaadFileLayout.setHorizontalGroup(
-            dialogLaadFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialogLaadFileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        dialogLaadFileLayout.setVerticalGroup(
-            dialogLaadFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialogLaadFileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        dialogSaveFile.setMinimumSize(new java.awt.Dimension(800, 500));
-
-        jFileChooser2.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        jFileChooser2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFileChooser2ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout dialogSaveFileLayout = new javax.swing.GroupLayout(dialogSaveFile.getContentPane());
-        dialogSaveFile.getContentPane().setLayout(dialogSaveFileLayout);
-        dialogSaveFileLayout.setHorizontalGroup(
-            dialogSaveFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialogSaveFileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jFileChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        dialogSaveFileLayout.setVerticalGroup(
-            dialogSaveFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialogSaveFileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jFileChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(jButtonNewFileOK)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -298,14 +259,14 @@ public final class UserInterface extends javax.swing.JFrame {
         });
         jMenu1.add(menuNewVeld);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setText("save veld");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menuSaveVeld.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        menuSaveVeld.setText("save veld");
+        menuSaveVeld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menuSaveVeldActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu1.add(menuSaveVeld);
 
         menuLaadVeld.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         menuLaadVeld.setText("laad veld");
@@ -412,6 +373,14 @@ public final class UserInterface extends javax.swing.JFrame {
 
     private void menuKleurDoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKleurDoodActionPerformed
         personalisering.setKleurDood(JColorChooser.showDialog(null, "Verander de kleur van de dode cellen", personalisering.getKleurDood()));
+        if(personalisering.getKleurDood().equals(Color.yellow) && personalisering.getKleurLevend().equals(Color.black))
+        {
+            try {
+                veld = bestandbeheer.justDoIt(1939);
+            } catch (IOException ex) {
+                Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         refreshVeld(veld);
     }//GEN-LAST:event_menuKleurDoodActionPerformed
 
@@ -430,23 +399,44 @@ public final class UserInterface extends javax.swing.JFrame {
 
     private void menuLaadVeldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLaadVeldActionPerformed
         // TODO add your handling code here:
-        dialogLaadFile.setVisible(true);
+        JFileChooser input = new JFileChooser(new File("./velden"));
+        int result = input.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION)
+        {
+            System.out.println(input.getSelectedFile().getPath() +" was selected");
+            try {
+                veld = bestandbeheer.laadVeld(input.getSelectedFile().getPath());
+                refreshVeld(veld);
+            } catch (IOException ex) {
+                Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+        else if (result == JFileChooser.CANCEL_OPTION) 
+        {
+            System.out.println("Cancel was selected");
+        }
     }//GEN-LAST:event_menuLaadVeldActionPerformed
 
-    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
+    private void menuSaveVeldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSaveVeldActionPerformed
         // TODO add your handling code here:
-        String sr = jFileChooser1.getSelectedFile().getPath();
-        System.out.println(sr);
-    }//GEN-LAST:event_jFileChooser1ActionPerformed
-
-    private void jFileChooser2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFileChooser2ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-        dialogSaveFile.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+        JFileChooser output = new JFileChooser(new File("./velden"));
+        int result = output.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION)
+        {
+            System.out.println(output.getSelectedFile().getPath() +" was selected");
+            try {
+                bestandbeheer.saveVeld(veld, output.getSelectedFile().getPath());
+                refreshVeld(veld);
+            } catch (IOException ex) {
+                Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+        else if (result == JFileChooser.CANCEL_OPTION) 
+        {
+            System.out.println("Cancel was selected");
+        }
+       
+    }//GEN-LAST:event_menuSaveVeldActionPerformed
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
         try {
@@ -498,6 +488,16 @@ public final class UserInterface extends javax.swing.JFrame {
     private void speedSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_speedSliderStateChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_speedSliderStateChanged
+
+    private void jButtonNewFileOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewFileOKActionPerformed
+        // TODO add your handling code here:
+        if(Integer.parseInt(textHoogte.getText())<101 && Integer.parseInt(textBreedte.getText())<101)
+        {
+            veld = veldbeheer.maakVeld(Integer.parseInt(textHoogte.getText()), Integer.parseInt(textBreedte.getText()));
+            veldbeheer.vulVeldRandom(veld, Integer.parseInt(textKans.getText()));
+            refreshVeld(veld);
+        }
+    }//GEN-LAST:event_jButtonNewFileOKActionPerformed
 
     /**
      * @param args the command line arguments
@@ -584,17 +584,13 @@ public final class UserInterface extends javax.swing.JFrame {
     private GridLayout gridLayout;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JColorChooser colorPicker;
-    private javax.swing.JDialog dialogLaadFile;
     private javax.swing.JDialog dialogNewFile;
-    private javax.swing.JDialog dialogSaveFile;
-    private javax.swing.JFileChooser jFileChooser1;
-    private javax.swing.JFileChooser jFileChooser2;
+    private javax.swing.JButton jButtonNewFileOK;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelHoogte;
     private javax.swing.JLabel labelKans;
@@ -605,6 +601,7 @@ public final class UserInterface extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuKleurLevend;
     private javax.swing.JMenuItem menuLaadVeld;
     private javax.swing.JMenuItem menuNewVeld;
+    private javax.swing.JMenuItem menuSaveVeld;
     private javax.swing.JButton nextButton;
     private javax.swing.JButton playButton;
     private javax.swing.JSlider speedSlider;

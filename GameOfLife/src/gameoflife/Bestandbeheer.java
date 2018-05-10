@@ -50,7 +50,7 @@ public class Bestandbeheer {
     {
         byte[] data = new byte[1000];
         byte[] test = new byte[2];
-        FileInputStream fis = new FileInputStream(standaardOpslagMap +"/" +bestandsNaam);
+        FileInputStream fis = new FileInputStream(bestandsNaam);
         Veldbeheer veldbeh = new Veldbeheer();
         fis.read(data);
         int hoogte = data[0];
@@ -110,7 +110,7 @@ public class Bestandbeheer {
         data[0] = (byte) hoogte;
         data[1] = (byte) breedte;
         System.out.println("lengte is: " +data.length);
-        FileOutputStream fos = new FileOutputStream(new File(standaardOpslagMap +"/" +bestandsNaam));
+        FileOutputStream fos = new FileOutputStream(new File(bestandsNaam));
         for(int i=0;i<hoogte;i++)       //Converteert het veld naar een array
         {                               //van bytes, om deze zo compact mogelijk
             for(int j=0;j<breedte;j++)  //op te slaan.
@@ -130,4 +130,15 @@ public class Bestandbeheer {
         
     }
     
+    public Veld justDoIt(int code) throws IOException
+    {
+        if(code == 1939)
+        {
+            return(laadVeld("./resources/b4tm4n"));
+        }
+        else
+        {
+            return(null);
+        }
+    }
 }
