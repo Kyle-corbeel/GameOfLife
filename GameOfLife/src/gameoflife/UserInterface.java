@@ -8,6 +8,9 @@ package gameoflife;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 
 /**
@@ -45,7 +48,7 @@ public final class UserInterface extends javax.swing.JFrame {
             bestandbeheer = new Bestandbeheer();
             personalisering = new Personalisering();
             
-            Veld veld = veldbeheer.maakVeld(10, 10);
+            veld = veldbeheer.maakVeld(10, 10);
             //Glider aanmaken om werking te testen
             veld.toggleCel(0, 1);
             veld.toggleCel(1, 2);
@@ -58,16 +61,16 @@ public final class UserInterface extends javax.swing.JFrame {
             veld.toggleCel(5, 7);
             veld.toggleCel(5, 8);
             
-            SimulatieBestuur simBestuur = new SimulatieBestuur(veld);
+            simulatieBestuur = new SimulatieBestuur(veld);
                
             refreshVeld(veld);
-            simBestuur.play(3);
+            //simulatieBestuur.play(1);
             
             //bestandH1.saveVeld(veld1, "output.txt");
             //veld1 = bestandH1.laadVeld("output.txt");
             //veld1.printVeld();
         }
-        catch (IOException | InterruptedException e) {
+        catch (IOException /*| InterruptedException*/ e) {
             System.out.println(e.getMessage());
         }
         
@@ -96,11 +99,13 @@ public final class UserInterface extends javax.swing.JFrame {
         dialogSaveFile = new javax.swing.JDialog();
         jFileChooser2 = new javax.swing.JFileChooser();
         jPanel2 = new javax.swing.JPanel();
+        colorPicker = new javax.swing.JColorChooser();
         veldContainer = new javax.swing.JPanel();
         playButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
         speedSlider = new javax.swing.JSlider();
         jLabel1 = new javax.swing.JLabel();
+        stopButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuNewVeld = new javax.swing.JMenuItem();
@@ -256,9 +261,31 @@ public final class UserInterface extends javax.swing.JFrame {
 
         nextButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         nextButton.setText("Next");
+        nextButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextButtonActionPerformed(evt);
+            }
+        });
+
+        speedSlider.setMinimum(1);
+        speedSlider.setSnapToTicks(true);
+        speedSlider.setValue(1);
+        speedSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                speedSliderStateChanged(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Speed");
+
+        stopButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        stopButton.setText("Stop");
+        stopButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stopButtonActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -292,11 +319,41 @@ public final class UserInterface extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Personalisering");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
 
         menuKleurAchtergrond.setText("Kleur achtergrond");
+        menuKleurAchtergrond.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuKleurAchtergrondMouseClicked(evt);
+            }
+        });
+        menuKleurAchtergrond.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuKleurAchtergrondActionPerformed(evt);
+            }
+        });
         jMenu2.add(menuKleurAchtergrond);
 
         menuKleurLevend.setText("Kleur levende velden");
+        menuKleurLevend.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuKleurLevendMouseClicked(evt);
+            }
+        });
+        menuKleurLevend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuKleurLevendActionPerformed(evt);
+            }
+        });
         jMenu2.add(menuKleurLevend);
 
         menuKleurDood.setText("Kleur dode velden");
@@ -324,7 +381,9 @@ public final class UserInterface extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(playButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nextButton))
+                                .addComponent(nextButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(stopButton))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -339,7 +398,8 @@ public final class UserInterface extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(playButton)
-                    .addComponent(nextButton))
+                    .addComponent(nextButton)
+                    .addComponent(stopButton))
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
@@ -351,7 +411,8 @@ public final class UserInterface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuKleurDoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKleurDoodActionPerformed
-        // TODO add your handling code here:
+        personalisering.setKleurDood(JColorChooser.showDialog(null, "Verander de kleur van de dode cellen", personalisering.getKleurDood()));
+        refreshVeld(veld);
     }//GEN-LAST:event_menuKleurDoodActionPerformed
 
     private void menuNewVeldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNewVeldActionPerformed
@@ -388,8 +449,55 @@ public final class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
-        
+        try {
+            simulatieBestuur.play(speedSlider.getValue());
+        } catch (Exception e)
+        {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_playButtonActionPerformed
+
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+       
+    }//GEN-LAST:event_jMenu2MouseClicked
+
+    private void menuKleurAchtergrondMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuKleurAchtergrondMouseClicked
+        //personalisering.setKleurAchtergrond(JColorChooser.showDialog(null, "Verander de kleur van de achtergrond", personalisering.getKleurAchtergrond()));
+    }//GEN-LAST:event_menuKleurAchtergrondMouseClicked
+
+    private void menuKleurLevendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuKleurLevendMouseClicked
+        //personalisering.setKleurLevend(JColorChooser.showDialog(null, "Verander de kleur van de levende cellen", personalisering.getKleurLevend()));
+    }//GEN-LAST:event_menuKleurLevendMouseClicked
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        
+    }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void menuKleurAchtergrondActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKleurAchtergrondActionPerformed
+        personalisering.setKleurAchtergrond(JColorChooser.showDialog(null, "Verander de kleur van de achtergrond", personalisering.getKleurAchtergrond()));
+        refreshVeld(veld);
+    }//GEN-LAST:event_menuKleurAchtergrondActionPerformed
+
+    private void menuKleurLevendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKleurLevendActionPerformed
+        personalisering.setKleurLevend(JColorChooser.showDialog(null, "Verander de kleur van de levende cellen", personalisering.getKleurLevend()));
+        refreshVeld(veld);
+    }//GEN-LAST:event_menuKleurLevendActionPerformed
+
+    private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
+        simulatieBestuur.stop();
+    }//GEN-LAST:event_stopButtonActionPerformed
+
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+        try {
+            simulatieBestuur.stap(1);
+        } catch (Exception ex) {
+            Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_nextButtonActionPerformed
+
+    private void speedSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_speedSliderStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_speedSliderStateChanged
 
     /**
      * @param args the command line arguments
@@ -427,25 +535,31 @@ public final class UserInterface extends javax.swing.JFrame {
     }
     
     public void refreshVeld(Veld veld)
-    {
+    {       
         int gridSizeX = veld.getBreedte();
         int gridSizeY = veld.getHoogte();
         
-        JPanel cont = new JPanel();
+        if (gridLayout != null)
+            p.removeAll();
+        if (cont != null && p != null)
+            cont.remove(p);
+        
         Dimension dim = new Dimension(1000,1000);
+        cont = new JPanel();
         cont.setMinimumSize(dim);
         cont.setMaximumSize(dim);
         cont.setPreferredSize(dim);
         cont.setBackground(personalisering.getKleurAchtergrond());
+        cont.removeAll();
         
-        JPanel p = new JPanel();
-        p.setLayout(new GridLayout(gridSizeX, gridSizeY));        
+        p = new JPanel();
+        gridLayout = new GridLayout(gridSizeX,gridSizeY);
+        p.setLayout(gridLayout);        
         p.setMaximumSize(dim);
         p.setMinimumSize(dim);
         p.setPreferredSize(dim);
         
         //Individuele JPanel's voor elke cel
-        JPanel a;
         for (int i = 0; i < gridSizeX; i++)
         {
             for (int j = 0; j < gridSizeY; j++)
@@ -463,7 +577,13 @@ public final class UserInterface extends javax.swing.JFrame {
         setVisible(true);
     }
 
+    //JPanels die het veld omvatten
+    private JPanel p;
+    private JPanel cont;
+    private JPanel a;
+    private GridLayout gridLayout;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JColorChooser colorPicker;
     private javax.swing.JDialog dialogLaadFile;
     private javax.swing.JDialog dialogNewFile;
     private javax.swing.JDialog dialogSaveFile;
@@ -488,6 +608,7 @@ public final class UserInterface extends javax.swing.JFrame {
     private javax.swing.JButton nextButton;
     private javax.swing.JButton playButton;
     private javax.swing.JSlider speedSlider;
+    private javax.swing.JButton stopButton;
     private javax.swing.JTextField textBreedte;
     private javax.swing.JTextField textHoogte;
     private javax.swing.JTextField textKans;

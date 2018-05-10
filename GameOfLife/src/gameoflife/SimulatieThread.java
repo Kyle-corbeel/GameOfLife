@@ -46,12 +46,9 @@ public class SimulatieThread implements Runnable{
         
         long correctieSnelheid;
         
-        if (snelheid == -1) 
-            correctieSnelheid = 1000;
-        else if (snelheid < 1)
-            correctieSnelheid = 1;
-        else
-            correctieSnelheid = snelheid;
+        if      (snelheid == -1)    correctieSnelheid = 1000;
+        else if (snelheid < 1)      correctieSnelheid = 1;
+        else                        correctieSnelheid = snelheid;
         
         //Wachttijd berekenen
         this.wachttijd = 1000 / correctieSnelheid; //in ms

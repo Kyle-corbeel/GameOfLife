@@ -5,8 +5,6 @@
  */
 package gameoflife;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -55,12 +53,16 @@ public class SimulatieBestuur{
      */
     public void stap(int aantal) throws Exception
     {
-        //Wachten op de vorige simulatie, mocht er nog één bezig zijn
-        try {
-            simThread.join();
-        } catch (Exception e)
+        if (simulatie != null)
         {
-            System.out.println("Stap() in orde, er runt geen andere simulatie (exception: " + e + ")");
+            simulatie.stop();
+            //Wachten op de vorige simulatie, mocht er nog één bezig zijn
+            try {
+                simThread.join();
+            } catch (Exception e)
+            {
+                System.out.println("Stap() in orde, er runt geen andere simulatie (exception: " + e + ")");
+            }
         }
         
         for (int i = 0; i < aantal; i++)
@@ -79,7 +81,7 @@ public class SimulatieBestuur{
             {
                 System.out.println(e);
             }
-            //veld.printVeld();
+            
         }
     }
     

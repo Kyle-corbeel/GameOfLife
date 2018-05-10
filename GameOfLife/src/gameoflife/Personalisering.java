@@ -29,7 +29,7 @@ public class Personalisering {
      * Verander de kleur van levende cellen
      * @param kleur gekozen kleur
      */
-    public void kiesKleurLevend(Color kleur)
+    public void setKleurLevend(Color kleur)
     {
         kleurLevend = kleur;
     }
@@ -38,7 +38,7 @@ public class Personalisering {
      * Verander de kleur van dode  cellen
      * @param kleur  gekozen kleur
      */
-    public void kiesKleurDood(Color kleur)
+    public void setKleurDood(Color kleur)
     {
         kleurDood = kleur;
     }
@@ -47,7 +47,7 @@ public class Personalisering {
      * Verand de kleur van de achtergrodn
      * @param kleur de gekozen kleur
      */
-    public void kiesKleurAchtergrond(Color kleur)
+    public void setKleurAchtergrond(Color kleur)
     {
         kleurAchtergrond = kleur;
     }

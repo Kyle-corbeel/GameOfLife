@@ -89,8 +89,7 @@ public class Veld {
                     if (!(k == i && m == j))
                     {
                         //Enkel levende cellen meetellen
-                        if(veldMatrix[k][m])
-                            aantal++;
+                        if(veldMatrix[k][m]) aantal++;
                     }
                 }
             }
