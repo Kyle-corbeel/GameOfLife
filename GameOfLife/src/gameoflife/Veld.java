@@ -22,7 +22,6 @@ public class Veld {
      * @param tempHoogte de hoogte die het veld zal aannemen
      * @param tempBreedte de breedte die het veld zal aannemen
      */
-    
     public Veld (int tempHoogte, int tempBreedte) throws IllegalArgumentException
     {
         if (tempHoogte ==0 || tempBreedte ==0)
@@ -43,7 +42,6 @@ public class Veld {
     /**
      * Functie om de werking van deze classe te testen
      */
-    
     public void printVeld ()
     {
         //Veld printen
@@ -73,7 +71,6 @@ public class Veld {
      * @param j de kolom van de cel
      * @return returned het aantal levende buren
      */
-    
     public synchronized int aantalBuren(int i,int j)
     {
         Integer aantal = 0;
@@ -104,7 +101,6 @@ public class Veld {
      * @param j de kolom van de cel
      * @return returned de staat van de cel: True-Levend, False-dood
      */
-    
     public synchronized boolean getCelStatus(int i, int j)
     {
         return(veldMatrix[i][j]);
@@ -115,10 +111,9 @@ public class Veld {
      * @param i de rij van de cel
      * @param j de kolom van de cel
      */
-    
     public synchronized void toggleCel(int i, int j)
     {
-        veldMatrix[i][j] =  !veldMatrix[i][j];
+        veldMatrix[i][j] = !veldMatrix[i][j];
     }
     
     /**

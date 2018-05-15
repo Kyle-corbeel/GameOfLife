@@ -8,6 +8,9 @@ package gameoflife;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -26,10 +29,10 @@ public final class UserInterface extends javax.swing.JFrame {
     private GridLayout layout;
     
     private Bestandbeheer bestandbeheer;
-    private Personalisering personalisering;
+    private static Personalisering personalisering;
     private SimulatieBestuur simulatieBestuur;
     private Veldbeheer veldbeheer;
-    private Veld veld;
+    protected static Veld veld;
     
     /**
      * Creates new form UserInterface
@@ -42,7 +45,7 @@ public final class UserInterface extends javax.swing.JFrame {
         simVeld = new JPanel();
         
         simVeld.setLayout(layout);
-        simVeld.setSize(500,500);
+        simVeld.setSize(25,25);
         veldContainer.add(simVeld);
         
         //Alle componenten aanmaken
@@ -51,7 +54,7 @@ public final class UserInterface extends javax.swing.JFrame {
             bestandbeheer = new Bestandbeheer();
             personalisering = new Personalisering();
             
-            veld = veldbeheer.maakVeld(10, 10);
+            veld = veldbeheer.maakVeld(50,50);
             //Glider aanmaken om werking te testen
             veld.toggleCel(0, 1);
             veld.toggleCel(1, 2);
@@ -60,9 +63,11 @@ public final class UserInterface extends javax.swing.JFrame {
             veld.toggleCel(2, 2);
             
             //Lijn van drie eenheden aanmaken om de werking te testen
+            /*
             veld.toggleCel(5, 6);
             veld.toggleCel(5, 7);
             veld.toggleCel(5, 8);
+            */
             
             simulatieBestuur = new SimulatieBestuur(veld);
                
@@ -72,6 +77,7 @@ public final class UserInterface extends javax.swing.JFrame {
             //bestandH1.saveVeld(veld1, "output.txt");
             //veld1 = bestandH1.laadVeld("output.txt");
             //veld1.printVeld();
+            
         }
         catch (IOException /*| InterruptedException*/ e) {
             System.out.println(e.getMessage());
@@ -535,16 +541,22 @@ public final class UserInterface extends javax.swing.JFrame {
     }
     
     public void refreshVeld(Veld veld)
-    {       
-        int gridSizeX = veld.getBreedte();
-        int gridSizeY = veld.getHoogte();
+    {
+        //double schaalfactor = 1000;
+        
+        double gridSizeX = veld.getBreedte();
+        double gridSizeY = veld.getHoogte();
+        
+        //double verhouding = gridSizeX / gridSizeY;
+        //double width = verhouding * schaalfactor;
         
         if (gridLayout != null)
             p.removeAll();
         if (cont != null && p != null)
             cont.remove(p);
         
-        Dimension dim = new Dimension(1000,1000);
+        //Dimension dim = new Dimension((int) schaalfactor, (int) width);
+        Dimension dim = new Dimension(1000, 1000);
         cont = new JPanel();
         cont.setMinimumSize(dim);
         cont.setMaximumSize(dim);
@@ -553,20 +565,44 @@ public final class UserInterface extends javax.swing.JFrame {
         cont.removeAll();
         
         p = new JPanel();
-        gridLayout = new GridLayout(gridSizeX,gridSizeY);
+        gridLayout = new GridLayout((int)gridSizeX,(int)gridSizeY);
         p.setLayout(gridLayout);        
         p.setMaximumSize(dim);
         p.setMinimumSize(dim);
         p.setPreferredSize(dim);
         
         //Individuele JPanel's voor elke cel
-        for (int i = 0; i < gridSizeX; i++)
+        for (int i = 0; i < gridSizeY; i++)
         {
-            for (int j = 0; j < gridSizeY; j++)
+            for (int j = 0; j < gridSizeX; j++)
             {
                 a = new JPanel();
-
-                a.setBackground(veld.getCelStatus(i, j) ? personalisering.getKleurLevend() : personalisering.getKleurDood());
+                
+                a.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent me)
+                    {
+                        if (me.getComponent() != null)
+                        {
+                            if (me.getSource() instanceof JPanel)
+                            {
+                                JPanel a = (JPanel) me.getSource();
+                                if(a.getClientProperty("X") != null && a.getClientProperty("Y") != null)
+                                {
+                                    int x = (int) a.getClientProperty("X");
+                                    int y = (int) a.getClientProperty("Y");
+                                    //System.out.println("Clicked veld -> X: " + x + " - y: " + y);
+                                    veld.toggleCel(y, x);
+                                    refreshVeld(veld);
+                                }
+                            }
+                        }
+                    }
+                });
+                a.putClientProperty("Y", i);
+                a.putClientProperty("X", j);
+               
+                a.setBackground(veld.getCelStatus(i,j) ? personalisering.getKleurLevend() : personalisering.getKleurDood());
                 
                 p.add(a);
             }
@@ -576,12 +612,13 @@ public final class UserInterface extends javax.swing.JFrame {
         veldContainer.add(cont);
         setVisible(true);
     }
-
+    
     //JPanels die het veld omvatten
     private JPanel p;
     private JPanel cont;
     private JPanel a;
     private GridLayout gridLayout;
+    //JPanel mouseListener
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JColorChooser colorPicker;
     private javax.swing.JDialog dialogNewFile;
