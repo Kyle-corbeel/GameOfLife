@@ -54,7 +54,7 @@ public final class UserInterface extends javax.swing.JFrame {
             bestandbeheer = new Bestandbeheer();
             personalisering = new Personalisering();
             
-            veld = veldbeheer.maakVeld(50,50);
+            veld = veldbeheer.maakVeld(18,18);
             //Glider aanmaken om werking te testen
             veld.toggleCel(0, 1);
             veld.toggleCel(1, 2);
@@ -383,6 +383,13 @@ public final class UserInterface extends javax.swing.JFrame {
         {
             try {
                 veld = bestandbeheer.justDoIt(1939);
+            } catch (IOException ex) {
+                Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (personalisering.getKleurDood().equals(Color.red) && personalisering.getKleurLevend().equals(Color.yellow))
+        {
+            try {
+                veld = bestandbeheer.justDoIt(1955);
             } catch (IOException ex) {
                 Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
             }

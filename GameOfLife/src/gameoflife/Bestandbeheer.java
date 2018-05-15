@@ -132,13 +132,13 @@ public class Bestandbeheer {
     
     public Veld justDoIt(int code) throws IOException
     {
-        if(code == 1939)
-        {
-            return(laadVeld("./resources/b4tm4n"));
-        }
-        else
-        {
-            return(null);
+        switch (code) {
+            case 1939:
+                return laadVeld("./resources/b4tm4n");
+            case 1955:
+                return laadVeld("./resources/MCD0");
+            default:
+                return null;
         }
     }
 }
