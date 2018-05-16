@@ -200,7 +200,7 @@ public final class UserInterface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game Of Life");
-        setSize(new java.awt.Dimension(1400, 2000));
+        setSize(new java.awt.Dimension(1400, 1200));
 
         veldContainer.setBackground(new java.awt.Color(90, 120, 240));
         veldContainer.setLayout(new java.awt.BorderLayout());
@@ -214,7 +214,7 @@ public final class UserInterface extends javax.swing.JFrame {
         });
 
         nextButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        nextButton.setText("Next");
+        nextButton.setText("Stap");
         nextButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nextButtonActionPerformed(evt);
@@ -231,7 +231,7 @@ public final class UserInterface extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Speed");
+        jLabel1.setText("Snelheid");
 
         stopButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         stopButton.setText("Stop");
@@ -241,7 +241,9 @@ public final class UserInterface extends javax.swing.JFrame {
             }
         });
 
-        jMenu1.setText("File");
+        jMenuBar1.setPreferredSize(new java.awt.Dimension(116, 40));
+
+        jMenu1.setText("Bestand");
 
         menuNewVeld.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         menuNewVeld.setText(" nieuw veld");
@@ -342,7 +344,7 @@ public final class UserInterface extends javax.swing.JFrame {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 659, Short.MAX_VALUE)))
+                        .addGap(0, 636, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -505,7 +507,8 @@ public final class UserInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(Integer.parseInt(textHoogte.getText())<101 && Integer.parseInt(textBreedte.getText())<101)
         {
-            veld = veldbeheer.maakVeld(Integer.parseInt(textHoogte.getText()), Integer.parseInt(textBreedte.getText()));
+            //veld = veldbeheer.maakVeld(Integer.parseInt(textHoogte.getText()), Integer.parseInt(textBreedte.getText()));
+            kopieerVeld(veldbeheer.maakVeld(Integer.parseInt(textHoogte.getText()), Integer.parseInt(textBreedte.getText())), veld);
             veldbeheer.vulVeldRandom(veld, Integer.parseInt(textKans.getText()));
             refreshVeld(veld);
         }

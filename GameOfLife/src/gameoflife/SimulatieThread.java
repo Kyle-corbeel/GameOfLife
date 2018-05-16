@@ -31,6 +31,8 @@ public class SimulatieThread implements Runnable{
     private int minWordtLevend;
     private int maxWordtLevend;
     
+    private int aantalStappen;
+    
     /**
      * Constructor van de simulatie
      * @param veld Het huidig simulatieveld
@@ -41,6 +43,28 @@ public class SimulatieThread implements Runnable{
      * @param maxWordtL
      */
     SimulatieThread(Veld veld, int minBlijfL, int maxBlijfL, int minWordtL, int maxWordtL, int snelheid) {
+        this.aantalStappen = -1;
+        
+        this.veld = veld;
+        
+        long correctieSnelheid;
+        
+        if      (snelheid == -1)    correctieSnelheid = 1000;
+        else if (snelheid < 1)      correctieSnelheid = 1;
+        else                        correctieSnelheid = snelheid;
+        
+        //Wachttijd berekenen
+        this.wachttijd = 1000 / correctieSnelheid; //in ms
+        
+        //Instellingen doorgeven
+        this.minBlijfLevend = minBlijfL;
+        this.maxBlijfLevend = maxBlijfL;
+        this.minWordtLevend = minWordtL;
+        this.maxWordtLevend = maxWordtL;
+    }
+    
+    SimulatieThread(Veld veld, int minBlijfL, int maxBlijfL, int minWordtL, int maxWordtL, int snelheid, int aantalStappen) {
+        this.aantalStappen = aantalStappen;
         
         this.veld = veld;
         
@@ -148,7 +172,7 @@ public class SimulatieThread implements Runnable{
     @Override
     public void run() {       
         //Zolang play aanstaat, blijft de simulatie lopen aan een bepaalde snelheid
-        while(this.play) {
+        while(this.play && aantalStappen != 0) {
             //Voer een simulatiestap uit
             stap();
             
@@ -158,6 +182,7 @@ public class SimulatieThread implements Runnable{
             } catch (InterruptedException ex) {
                 Logger.getLogger(SimulatieThread.class.getName()).log(Level.SEVERE, null, ex);
             }
+            if (aantalStappen > 0) aantalStappen--;
         }
     }
 }

@@ -53,6 +53,7 @@ public class SimulatieBestuur{
      */
     public void stap(int aantal) throws Exception
     {
+        
         if (simulatie != null)
         {
             simulatie.stop();
@@ -61,27 +62,27 @@ public class SimulatieBestuur{
                 simThread.join();
             } catch (Exception e)
             {
-                System.out.println("Stap() in orde, er runt geen andere simulatie (exception: " + e + ")");
+                System.out.println(e);
             }
         }
         
         for (int i = 0; i < aantal; i++)
         {
             //Maak nieuwe simulatie en start
-            simulatie = new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend, -1);
+            simulatie = new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend, -1, 1);
             simThread = new Thread(simulatie);
             simThread.start();
             //Stop de simulatie zodat er slechts één stap doorlopen wordt
-            stop();
+            //stop();
             
             //Wacht tot simulatie klaar is
+            /*
             try {
                 simThread.join();
             } catch(Exception e)
             {
                 System.out.println(e);
-            }
-            
+            }*/
         }
     }
     
