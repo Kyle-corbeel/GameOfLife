@@ -10,7 +10,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -54,7 +53,8 @@ public final class UserInterface extends javax.swing.JFrame {
             bestandbeheer = new Bestandbeheer();
             personalisering = new Personalisering();
             
-            veld = veldbeheer.maakVeld(18,18);
+            veld = veldbeheer.maakVeld(30,30);
+            
             //Glider aanmaken om werking te testen
             veld.toggleCel(0, 1);
             veld.toggleCel(1, 2);
@@ -62,22 +62,9 @@ public final class UserInterface extends javax.swing.JFrame {
             veld.toggleCel(2, 1);
             veld.toggleCel(2, 2);
             
-            //Lijn van drie eenheden aanmaken om de werking te testen
-            /*
-            veld.toggleCel(5, 6);
-            veld.toggleCel(5, 7);
-            veld.toggleCel(5, 8);
-            */
-            
             simulatieBestuur = new SimulatieBestuur(veld);
                
-            refreshVeld(veld);
-            //simulatieBestuur.play(1);
-            
-            //bestandH1.saveVeld(veld1, "output.txt");
-            //veld1 = bestandH1.laadVeld("output.txt");
-            //veld1.printVeld();
-            
+            refreshVeld(veld);            
         }
         catch (IOException /*| InterruptedException*/ e) {
             System.out.println(e.getMessage());
@@ -213,7 +200,7 @@ public final class UserInterface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game Of Life");
-        setSize(new java.awt.Dimension(1400, 1200));
+        setSize(new java.awt.Dimension(1400, 2000));
 
         veldContainer.setBackground(new java.awt.Color(90, 120, 240));
         veldContainer.setLayout(new java.awt.BorderLayout());
@@ -412,13 +399,15 @@ public final class UserInterface extends javax.swing.JFrame {
 
     private void menuLaadVeldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLaadVeldActionPerformed
         // TODO add your handling code here:
+        simulatieBestuur.stop();
         JFileChooser input = new JFileChooser(new File("./velden"));
         int result = input.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION)
         {
             System.out.println(input.getSelectedFile().getPath() +" was selected");
             try {
-                veld = bestandbeheer.laadVeld(input.getSelectedFile().getPath());
+                //veld = bestandbeheer.laadVeld(input.getSelectedFile().getPath());
+                kopieerVeld(bestandbeheer.laadVeld(input.getSelectedFile().getPath()), veld);
                 refreshVeld(veld);
             } catch (IOException ex) {
                 Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
@@ -432,6 +421,7 @@ public final class UserInterface extends javax.swing.JFrame {
 
     private void menuSaveVeldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSaveVeldActionPerformed
         // TODO add your handling code here:
+        simulatieBestuur.stop();
         JFileChooser output = new JFileChooser(new File("./velden"));
         int result = output.showSaveDialog(this);
         if (result == JFileChooser.APPROVE_OPTION)
@@ -477,11 +467,13 @@ public final class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void menuKleurAchtergrondActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKleurAchtergrondActionPerformed
+        simulatieBestuur.stop();
         personalisering.setKleurAchtergrond(JColorChooser.showDialog(null, "Verander de kleur van de achtergrond", personalisering.getKleurAchtergrond()));
         refreshVeld(veld);
     }//GEN-LAST:event_menuKleurAchtergrondActionPerformed
 
     private void menuKleurLevendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKleurLevendActionPerformed
+        simulatieBestuur.stop();
         personalisering.setKleurLevend(JColorChooser.showDialog(null, "Verander de kleur van de levende cellen", personalisering.getKleurLevend()));
         refreshVeld(veld);
     }//GEN-LAST:event_menuKleurLevendActionPerformed
@@ -491,6 +483,7 @@ public final class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_stopButtonActionPerformed
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+        simulatieBestuur.stop();
         try {
             simulatieBestuur.stap(1);
         } catch (Exception ex) {
@@ -499,7 +492,13 @@ public final class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void speedSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_speedSliderStateChanged
-        // TODO add your handling code here:
+        simulatieBestuur.stop();
+        try {
+            simulatieBestuur.play(speedSlider.getValue());
+        } catch(Exception e)
+        {
+            System.out.println("Verandering bij speedslider: " + e);
+        }
     }//GEN-LAST:event_speedSliderStateChanged
 
     private void jButtonNewFileOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewFileOKActionPerformed
@@ -547,6 +546,10 @@ public final class UserInterface extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Refresh de UI met het huidige veld
+     * @param veld het Veld dat weergegeven zal worden
+     */
     public void refreshVeld(Veld veld)
     {
         //double schaalfactor = 1000;
@@ -618,6 +621,25 @@ public final class UserInterface extends javax.swing.JFrame {
         cont.add(p);
         veldContainer.add(cont);
         setVisible(true);
+    }
+    
+    /**
+     * Vul een Veld (nieuwVeld) met dezelfde waarden als een ander Veld (veld)
+     * @param veld veld dat gekopiëerd zal worden
+     * @param nieuwVeld veld waar de waarden in geplakt worden
+     */
+    public void kopieerVeld(Veld veld, Veld nieuwVeld)
+    {
+        if (!(veld.getHoogte() == nieuwVeld.getHoogte() && veld.getBreedte() == nieuwVeld.getBreedte()))
+            nieuwVeld = new Veld(veld.getHoogte(), veld.getBreedte());
+        for (int i = 0; i < veld.getHoogte(); i++)
+        {
+            for (int j = 0; j < veld.getBreedte(); j++)
+            {
+                if (veld.getCelStatus(i, j) != nieuwVeld.getCelStatus(i,j))
+                    nieuwVeld.toggleCel(i,j);
+            }
+        }
     }
     
     //JPanels die het veld omvatten

@@ -110,7 +110,8 @@ public class SimulatieBestuur{
      */
     public void stop()
     {
-        simulatie.stop();
+        if (simulatie != null)
+            simulatie.stop();
     }
     
     /**
