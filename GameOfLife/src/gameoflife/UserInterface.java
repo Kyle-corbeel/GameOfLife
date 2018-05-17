@@ -111,7 +111,9 @@ public final class UserInterface extends javax.swing.JFrame {
 
         jMenuItem1.setText("jMenuItem1");
 
-        dialogNewFile.setMinimumSize(new java.awt.Dimension(200, 160));
+        dialogNewFile.setTitle("Nieuw veld");
+        dialogNewFile.setMinimumSize(new java.awt.Dimension(500, 300));
+        dialogNewFile.setPreferredSize(new java.awt.Dimension(500, 1000));
 
         textHoogte.setMaximumSize(new java.awt.Dimension(6, 22));
 
@@ -200,7 +202,8 @@ public final class UserInterface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game Of Life");
-        setSize(new java.awt.Dimension(1400, 1200));
+        setPreferredSize(new java.awt.Dimension(1400, 1400));
+        setSize(new java.awt.Dimension(1400, 1400));
 
         veldContainer.setBackground(new java.awt.Color(90, 120, 240));
         veldContainer.setLayout(new java.awt.BorderLayout());
@@ -344,7 +347,7 @@ public final class UserInterface extends javax.swing.JFrame {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 636, Short.MAX_VALUE)))
+                        .addGap(0, 1082, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
