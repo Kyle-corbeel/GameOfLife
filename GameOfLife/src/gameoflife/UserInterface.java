@@ -202,7 +202,6 @@ public final class UserInterface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game Of Life");
-        setPreferredSize(new java.awt.Dimension(1400, 1400));
         setSize(new java.awt.Dimension(1400, 1400));
 
         veldContainer.setBackground(new java.awt.Color(90, 120, 240));
@@ -635,21 +634,27 @@ public final class UserInterface extends javax.swing.JFrame {
     
     /**
      * Vul een Veld (nieuwVeld) met dezelfde waarden als een ander Veld (veld)
-     * @param veld veld dat gekopiëerd zal worden
+     * @param oudVeld veld dat gekopiëerd zal worden
      * @param nieuwVeld veld waar de waarden in geplakt worden
      */
-    public void kopieerVeld(Veld veld, Veld nieuwVeld)
+    public void kopieerVeld(Veld oudVeld, Veld nieuwVeld)
     {
-        if (!(veld.getHoogte() == nieuwVeld.getHoogte() && veld.getBreedte() == nieuwVeld.getBreedte()))
-            nieuwVeld = new Veld(veld.getHoogte(), veld.getBreedte());
-        for (int i = 0; i < veld.getHoogte(); i++)
+        if (!(oudVeld.getHoogte() == veld.getHoogte() && oudVeld.getBreedte() == veld.getBreedte())) 
         {
-            for (int j = 0; j < veld.getBreedte(); j++)
+            //nieuwVeld = new Veld(oudVeld.getHoogte(), oudVeld.getBreedte());
+            veld.setHoogte(oudVeld.getHoogte());
+            veld.setBreedte(oudVeld.getBreedte());
+        }
+        for (int i = 0; i < oudVeld.getHoogte(); i++)
+        {
+            for (int j = 0; j < oudVeld.getBreedte(); j++)
             {
-                if (veld.getCelStatus(i, j) != nieuwVeld.getCelStatus(i,j))
-                    nieuwVeld.toggleCel(i,j);
+                if (oudVeld.getCelStatus(i, j) != veld.getCelStatus(i,j))
+                    veld.toggleCel(i,j);
             }
         }
+        //simulatieBestuur.setVeld(nieuwVeld);
+        //this.veld = nieuwVeld;
     }
     
     //JPanels die het veld omvatten

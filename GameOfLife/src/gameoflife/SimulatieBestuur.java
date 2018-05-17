@@ -139,4 +139,13 @@ public class SimulatieBestuur{
         }
         return false;
     }
+    
+    /**
+     * Plaats een nieuw veld in simulatieBestuur
+     * @param veld veld dat nu gesimuleerd zal worden
+     */
+    public void setVeld(Veld veld)
+    {
+        this.veld = veld;
+    }
 }

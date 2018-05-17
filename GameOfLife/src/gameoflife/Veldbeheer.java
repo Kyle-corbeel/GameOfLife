@@ -66,13 +66,16 @@ public class Veldbeheer {
     {
         Random rand = new Random();
         veld = this.resetVeld(veld);
-        for(i=0;i<veld.getHoogte();i++)
+        if (kans > 0)
         {
-            for (j=0;j<veld.getBreedte();j++)
+            for(i=0;i<veld.getHoogte();i++)
             {
-                if(rand.nextInt(100)<=kans)
+                for (j=0;j<veld.getBreedte();j++)
                 {
-                    veld.toggleCel(i, j);
+                    if(rand.nextInt(100)<=kans)
+                    {
+                        veld.toggleCel(i, j);
+                    }
                 }
             }
         }

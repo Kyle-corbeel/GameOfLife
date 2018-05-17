@@ -150,23 +150,15 @@ public class SimulatieThread implements Runnable{
      * Vul een Veld (nieuwVeld) met dezelfde waarden als een ander Veld (veld)
      * @param veld veld dat gekopiëerd zal worden
      * @param nieuwVeld veld waar de waarden in geplakt worden
-     * @throws java.lang.Exception: Wanneer de dimensies van de velden niet overeen komen, wordt er een Exception gethrowed
      */
-    public void kopieerVeld(Veld veld, Veld nieuwVeld) throws Exception
+    public void kopieerVeld(Veld veld, Veld nieuwVeld)
     {
-        if (veld.getHoogte() == nieuwVeld.getHoogte() && veld.getBreedte() == nieuwVeld.getBreedte())
-        {
-            for (int i = 0; i < veld.getHoogte(); i++)
-            {
-                for (int j = 0; j < veld.getBreedte(); j++)
-                {
-                    if (veld.getCelStatus(i, j))
-                        nieuwVeld.toggleCel(i,j);
-                }
-            }
-        } else {
-            throw new Exception("De groottes van de velden komen niet overeen! Het kopiëren is stopgezet.");
-        }
+        if (!(veld.getHoogte() == nieuwVeld.getHoogte() && veld.getBreedte() == nieuwVeld.getBreedte()))
+            nieuwVeld = new Veld(veld.getHoogte(), veld.getBreedte());     
+        
+        for (int i = 0; i < veld.getHoogte(); i++)
+            for (int j = 0; j < veld.getBreedte(); j++)
+                if (veld.getCelStatus(i, j)) nieuwVeld.toggleCel(i,j);
     }
     
     @Override

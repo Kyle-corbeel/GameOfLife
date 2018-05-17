@@ -26,21 +26,22 @@ public class Veld {
     {
         if (tempHoogte ==0 || tempBreedte ==0)
             throw new IllegalArgumentException("Dimensies moeten groter zijn dan 0");
+        
         this.hoogte = tempHoogte;
         this.breedte = tempBreedte;
-        Boolean[][] tempVeldMatrix = new Boolean[hoogte][breedte];
+        
+        this.veldMatrix = new Boolean[hoogte][breedte];
         for (i=0; i<hoogte; i++)
         {
             for (j=0; j<breedte; j++)
             {
-                tempVeldMatrix[i][j] = false;
+                this.veldMatrix[i][j] = false;
             }
         }
-        veldMatrix = tempVeldMatrix;
     }
     
     /**
-     * Functie om de werking van deze classe te testen
+     * Method om de werking van deze classe te testen
      */
     public void printVeld ()
     {
@@ -132,6 +133,32 @@ public class Veld {
     public int getBreedte ()
     {
         return(breedte);
+    }
+    
+    public void setHoogte(int hoogteN)
+    {
+        this.veldMatrix = new Boolean[hoogteN][breedte];
+        for (i=0; i<hoogteN; i++)
+        {
+            for (j=0; j<breedte; j++)
+            {
+                this.veldMatrix[i][j] = false;
+            }
+        }
+        this.hoogte = hoogteN;
+    }
+    
+    public void setBreedte(int breedteN)
+    {
+        this.veldMatrix = new Boolean[hoogte][breedteN];
+        for (i=0; i<hoogte; i++)
+        {
+            for (j=0; j<breedteN; j++)
+            {
+                this.veldMatrix[i][j] = false;
+            }
+        }
+        this.breedte = breedteN;
     }
 }
 
