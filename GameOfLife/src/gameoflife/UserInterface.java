@@ -28,10 +28,10 @@ public final class UserInterface extends javax.swing.JFrame {
     private GridLayout layout;
     
     private Bestandbeheer bestandbeheer;
-    private static Personalisering personalisering;
+    private Personalisering personalisering;
     private SimulatieBestuur simulatieBestuur;
     private Veldbeheer veldbeheer;
-    protected static Veld veld;
+    protected Veld veld;
     
     /**
      * Creates new form UserInterface
@@ -368,16 +368,20 @@ public final class UserInterface extends javax.swing.JFrame {
 
     private void menuKleurDoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKleurDoodActionPerformed
         personalisering.setKleurDood(JColorChooser.showDialog(null, "Verander de kleur van de dode cellen", personalisering.getKleurDood()));
+        //personalisering.setKleurDood(Color.red);
+        //personalisering.setKleurLevend(Color.yellow);
         if(personalisering.getKleurDood().equals(Color.yellow) && personalisering.getKleurLevend().equals(Color.black))
         {
             try {
                 veld = bestandbeheer.justDoIt(1939);
+                //kopieerVeld(bestandbeheer.justDoIt(1939), veld);
             } catch (IOException ex) {
                 Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (personalisering.getKleurDood().equals(Color.red) && personalisering.getKleurLevend().equals(Color.yellow))
         {
             try {
+                //kopieerVeld(bestandbeheer.justDoIt(1955), veld);
                 veld = bestandbeheer.justDoIt(1955);
             } catch (IOException ex) {
                 Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);

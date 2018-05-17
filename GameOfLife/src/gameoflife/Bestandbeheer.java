@@ -75,14 +75,14 @@ public class Bestandbeheer {
                     veldMatrix[i][j] = true;
                 }
                 if(j==breedte-1)
-                    {
-                        j=0;
-                        i++;
-                    }
+                {
+                    j=0;
+                    i++;
+                }
                 else
-                    {
-                        j++;
-                    }
+                {
+                    j++;
+                }
             }
         }
         
