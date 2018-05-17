@@ -561,21 +561,20 @@ public final class UserInterface extends javax.swing.JFrame {
      */
     public void refreshVeld(Veld veld)
     {
-        //double schaalfactor = 1000;
+        double schaalfactor = 1000;
         
         double gridSizeX = veld.getBreedte();
         double gridSizeY = veld.getHoogte();
         
-        //double verhouding = gridSizeX / gridSizeY;
-        //double width = verhouding * schaalfactor;
+        double verhouding = gridSizeY / gridSizeX;
+        double width = verhouding * schaalfactor;
         
         if (gridLayout != null)
             p.removeAll();
         if (cont != null && p != null)
             cont.remove(p);
-        
-        //Dimension dim = new Dimension((int) schaalfactor, (int) width);
-        Dimension dim = new Dimension(1000, 1000);
+        Dimension dim = new Dimension((int) width,(int) schaalfactor);
+        //Dimension dim = new Dimension(1000, 1000);
         cont = new JPanel();
         cont.setMinimumSize(dim);
         cont.setMaximumSize(dim);
