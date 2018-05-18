@@ -93,6 +93,12 @@ public final class UserInterface extends javax.swing.JFrame {
         jButtonNewFileOK = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         colorPicker = new javax.swing.JColorChooser();
+        veranderSchaalfactor = new javax.swing.JDialog();
+        schaalSlider = new javax.swing.JSlider();
+        label1 = new java.awt.Label();
+        button1 = new java.awt.Button();
+        label2 = new java.awt.Label();
+        label3 = new java.awt.Label();
         veldContainer = new javax.swing.JPanel();
         playButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
@@ -108,12 +114,12 @@ public final class UserInterface extends javax.swing.JFrame {
         menuKleurAchtergrond = new javax.swing.JMenuItem();
         menuKleurLevend = new javax.swing.JMenuItem();
         menuKleurDood = new javax.swing.JMenuItem();
+        Schaalfactor = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
         dialogNewFile.setTitle("Nieuw veld");
         dialogNewFile.setMinimumSize(new java.awt.Dimension(500, 300));
-        dialogNewFile.setPreferredSize(new java.awt.Dimension(500, 1000));
 
         textHoogte.setMaximumSize(new java.awt.Dimension(6, 22));
 
@@ -131,9 +137,9 @@ public final class UserInterface extends javax.swing.JFrame {
             }
         });
 
-        labelHoogte.setText("Hoogte");
+        labelHoogte.setText("Breedte");
 
-        lebelBreedte.setText("Breedte");
+        lebelBreedte.setText("Hoogte");
 
         labelKans.setText("Levend/dood");
 
@@ -200,8 +206,65 @@ public final class UserInterface extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        veranderSchaalfactor.setMinimumSize(new java.awt.Dimension(200, 130));
+        veranderSchaalfactor.setPreferredSize(new java.awt.Dimension(200, 130));
+        veranderSchaalfactor.setSize(new java.awt.Dimension(200, 130));
+
+        schaalSlider.setMaximum(2000);
+        schaalSlider.setMinimum(100);
+        schaalSlider.setSnapToTicks(true);
+        schaalSlider.setValue(700);
+
+        label1.setText("Schaalfactor");
+
+        button1.setLabel("Ok");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+
+        label2.setText("Huidig:" + schaalSlider.getValue());
+
+        javax.swing.GroupLayout veranderSchaalfactorLayout = new javax.swing.GroupLayout(veranderSchaalfactor.getContentPane());
+        veranderSchaalfactor.getContentPane().setLayout(veranderSchaalfactorLayout);
+        veranderSchaalfactorLayout.setHorizontalGroup(
+            veranderSchaalfactorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(veranderSchaalfactorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(veranderSchaalfactorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(veranderSchaalfactorLayout.createSequentialGroup()
+                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(veranderSchaalfactorLayout.createSequentialGroup()
+                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addGroup(veranderSchaalfactorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(veranderSchaalfactorLayout.createSequentialGroup()
+                                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 55, Short.MAX_VALUE))
+                            .addComponent(schaalSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
+        veranderSchaalfactorLayout.setVerticalGroup(
+            veranderSchaalfactorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(veranderSchaalfactorLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(veranderSchaalfactorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(schaalSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        label3.setText("label3");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game Of Life");
+        setPreferredSize(new java.awt.Dimension(1400, 1400));
         setSize(new java.awt.Dimension(1400, 1400));
 
         veldContainer.setBackground(new java.awt.Color(90, 120, 240));
@@ -321,6 +384,19 @@ public final class UserInterface extends javax.swing.JFrame {
             }
         });
         jMenu2.add(menuKleurDood);
+
+        Schaalfactor.setText("Schaalfactor");
+        Schaalfactor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SchaalfactorMouseClicked(evt);
+            }
+        });
+        Schaalfactor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SchaalfactorActionPerformed(evt);
+            }
+        });
+        jMenu2.add(Schaalfactor);
 
         jMenuBar1.add(jMenu2);
 
@@ -500,6 +576,7 @@ public final class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void speedSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_speedSliderStateChanged
+        /*
         simulatieBestuur.stop();
         try {
             simulatieBestuur.play(speedSlider.getValue());
@@ -507,6 +584,7 @@ public final class UserInterface extends javax.swing.JFrame {
         {
             System.out.println("Verandering bij speedslider: " + e);
         }
+        */
     }//GEN-LAST:event_speedSliderStateChanged
 
     private void jButtonNewFileOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewFileOKActionPerformed
@@ -519,6 +597,20 @@ public final class UserInterface extends javax.swing.JFrame {
             refreshVeld(veld);
         }
     }//GEN-LAST:event_jButtonNewFileOKActionPerformed
+
+    private void SchaalfactorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SchaalfactorMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SchaalfactorMouseClicked
+
+    private void SchaalfactorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SchaalfactorActionPerformed
+        veranderSchaalfactor.setVisible(true);
+    }//GEN-LAST:event_SchaalfactorActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        personalisering.setSchaalfactor(schaalSlider.getValue());
+        veranderSchaalfactor.setVisible(false);
+        refreshVeld(veld);
+    }//GEN-LAST:event_button1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -561,7 +653,7 @@ public final class UserInterface extends javax.swing.JFrame {
      */
     public void refreshVeld(Veld veld)
     {
-        double schaalfactor = 1000;
+        double schaalfactor = personalisering.getSchaalfactor();
         
         double gridSizeX = veld.getBreedte();
         double gridSizeY = veld.getHoogte();
@@ -663,6 +755,8 @@ public final class UserInterface extends javax.swing.JFrame {
     private GridLayout gridLayout;
     //JPanel mouseListener
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Schaalfactor;
+    private java.awt.Button button1;
     private javax.swing.JColorChooser colorPicker;
     private javax.swing.JDialog dialogNewFile;
     private javax.swing.JButton jButtonNewFileOK;
@@ -672,6 +766,9 @@ public final class UserInterface extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
+    private java.awt.Label label1;
+    private java.awt.Label label2;
+    private java.awt.Label label3;
     private javax.swing.JLabel labelHoogte;
     private javax.swing.JLabel labelKans;
     private javax.swing.JLabel labelKans1;
@@ -684,11 +781,13 @@ public final class UserInterface extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuSaveVeld;
     private javax.swing.JButton nextButton;
     private javax.swing.JButton playButton;
+    private javax.swing.JSlider schaalSlider;
     private javax.swing.JSlider speedSlider;
     private javax.swing.JButton stopButton;
     private javax.swing.JTextField textBreedte;
     private javax.swing.JTextField textHoogte;
     private javax.swing.JTextField textKans;
     private javax.swing.JPanel veldContainer;
+    private javax.swing.JDialog veranderSchaalfactor;
     // End of variables declaration//GEN-END:variables
 }

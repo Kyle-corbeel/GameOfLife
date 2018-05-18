@@ -16,6 +16,7 @@ public class Personalisering {
     private Color kleurAchtergrond;
     private Color kleurDood;
     private Color kleurLevend;
+    private int schaalfactor;
     
     public Personalisering()
     {
@@ -23,6 +24,8 @@ public class Personalisering {
         kleurAchtergrond = Color.GRAY;
         kleurDood = Color.BLACK;
         kleurLevend = Color.WHITE;
+        //Standaardinstelling initialiseren
+        schaalfactor = 700;
     }
     
     /**
@@ -77,6 +80,24 @@ public class Personalisering {
     public Color getKleurDood()
     {
         return kleurDood;
+    }
+    
+    /**
+     * Verander de schaalfactor van het veld
+     * @param newSchaalfactor Schaalfactor van het veld (hoogte)
+     */
+    public void setSchaalfactor(int newSchaalfactor)
+    {
+        schaalfactor = newSchaalfactor;
+    }
+    
+    /**
+     * Vraag de huidige schaalfactor op
+     * @return int schaalfactor
+     */
+    public int getSchaalfactor()
+    {
+        return schaalfactor;
     }
     
 }
