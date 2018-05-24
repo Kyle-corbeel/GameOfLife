@@ -207,7 +207,6 @@ public final class UserInterface extends javax.swing.JFrame {
         );
 
         veranderSchaalfactor.setMinimumSize(new java.awt.Dimension(200, 130));
-        veranderSchaalfactor.setPreferredSize(new java.awt.Dimension(200, 130));
         veranderSchaalfactor.setSize(new java.awt.Dimension(200, 130));
 
         schaalSlider.setMaximum(2000);

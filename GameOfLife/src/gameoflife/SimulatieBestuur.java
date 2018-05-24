@@ -58,31 +58,33 @@ public class SimulatieBestuur{
         {
             simulatie.stop();
             //Wachten op de vorige simulatie, mocht er nog één bezig zijn
+            /*
             try {
                 simThread.join();
             } catch (Exception e)
             {
                 System.out.println(e);
-            }
-        }
-        
-        for (int i = 0; i < aantal; i++)
-        {
-            //Maak nieuwe simulatie en start
-            simulatie = new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend, -1, 1);
-            simThread = new Thread(simulatie);
-            simThread.start();
-            //Stop de simulatie zodat er slechts één stap doorlopen wordt
-            //stop();
-            
-            //Wacht tot simulatie klaar is
-            /*
-            try {
-                simThread.join();
-            } catch(Exception e)
-            {
-                System.out.println(e);
             }*/
+        } else {
+        
+            for (int i = 0; i < aantal; i++)
+            {
+                //Maak nieuwe simulatie en start
+                simulatie = new SimulatieThread(veld, minBlijfLevend, maxBlijfLevend, minWordtLevend, maxWordtLevend, -1, 1);
+                simThread = new Thread(simulatie);
+                simThread.start();
+                //Stop de simulatie zodat er slechts één stap doorlopen wordt
+                //stop();
+
+                //Wacht tot simulatie klaar is
+                /*
+                try {
+                    simThread.join();
+                } catch(Exception e)
+                {
+                    System.out.println(e);
+                }*/
+            }
         }
     }
     
